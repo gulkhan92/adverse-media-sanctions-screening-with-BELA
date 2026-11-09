@@ -1,0 +1,65 @@
+# Row counts
+
+Generated: 2026-11-09T18:06:46+00:00
+
+| File | Rows |
+|---|---:|
+| raw/eval/mewsli_x/hf/wikinews_mentions/ar/dev.jsonl | 318 |
+| raw/eval/mewsli_x/hf/wikinews_mentions/ar/test.jsonl | 1,501 |
+| raw/eval/mewsli_x/hf/wikinews_mentions/de/dev.jsonl | 326 |
+| raw/eval/mewsli_x/hf/wikinews_mentions/de/test.jsonl | 1,551 |
+| raw/eval/mewsli_x/hf/wikinews_mentions/en/dev.jsonl | 316 |
+| raw/eval/mewsli_x/hf/wikinews_mentions/en/test.jsonl | 1,490 |
+| raw/eval/mewsli_x/hf/wikinews_mentions/es/dev.jsonl | 311 |
+| raw/eval/mewsli_x/hf/wikinews_mentions/es/test.jsonl | 1,552 |
+| raw/eval/mewsli_x/hf/wikinews_mentions/fa/dev.jsonl | 72 |
+| raw/eval/mewsli_x/hf/wikinews_mentions/fa/test.jsonl | 458 |
+| raw/eval/mewsli_x/hf/wikinews_mentions/ja/dev.jsonl | 310 |
+| raw/eval/mewsli_x/hf/wikinews_mentions/ja/test.jsonl | 1,519 |
+| raw/eval/mewsli_x/hf/wikinews_mentions/pl/dev.jsonl | 304 |
+| raw/eval/mewsli_x/hf/wikinews_mentions/pl/test.jsonl | 1,562 |
+| raw/eval/mewsli_x/hf/wikinews_mentions/ro/dev.jsonl | 145 |
+| raw/eval/mewsli_x/hf/wikinews_mentions/ro/test.jsonl | 672 |
+| raw/eval/mewsli_x/hf/wikinews_mentions/ta/dev.jsonl | 312 |
+| raw/eval/mewsli_x/hf/wikinews_mentions/ta/test.jsonl | 1,567 |
+| raw/eval/mewsli_x/hf/wikinews_mentions/tr/dev.jsonl | 262 |
+| raw/eval/mewsli_x/hf/wikinews_mentions/tr/test.jsonl | 1,215 |
+| raw/eval/mewsli_x/hf/wikinews_mentions/uk/dev.jsonl | 315 |
+| raw/eval/mewsli_x/hf/wikinews_mentions/uk/test.jsonl | 1,537 |
+| raw/eval/mewsli_x/jsonl/ar_dev.jsonl | 318 |
+| raw/eval/mewsli_x/jsonl/ar_test.jsonl | 1,501 |
+| raw/eval/mewsli_x/jsonl/de_dev.jsonl | 326 |
+| raw/eval/mewsli_x/jsonl/de_test.jsonl | 1,551 |
+| raw/eval/mewsli_x/jsonl/en_dev.jsonl | 316 |
+| raw/eval/mewsli_x/jsonl/en_test.jsonl | 1,490 |
+| raw/eval/mewsli_x/jsonl/es_dev.jsonl | 311 |
+| raw/eval/mewsli_x/jsonl/es_test.jsonl | 1,552 |
+| raw/eval/mewsli_x/jsonl/fa_dev.jsonl | 72 |
+| raw/eval/mewsli_x/jsonl/fa_test.jsonl | 458 |
+| raw/eval/mewsli_x/jsonl/ja_dev.jsonl | 310 |
+| raw/eval/mewsli_x/jsonl/ja_test.jsonl | 1,519 |
+| raw/eval/mewsli_x/jsonl/pl_dev.jsonl | 304 |
+| raw/eval/mewsli_x/jsonl/pl_test.jsonl | 1,562 |
+| raw/eval/mewsli_x/jsonl/ro_dev.jsonl | 145 |
+| raw/eval/mewsli_x/jsonl/ro_test.jsonl | 672 |
+| raw/eval/mewsli_x/jsonl/ta_dev.jsonl | 312 |
+| raw/eval/mewsli_x/jsonl/ta_test.jsonl | 1,567 |
+| raw/eval/mewsli_x/jsonl/tr_dev.jsonl | 262 |
+| raw/eval/mewsli_x/jsonl/tr_test.jsonl | 1,215 |
+| raw/eval/mewsli_x/jsonl/uk_dev.jsonl | 315 |
+| raw/eval/mewsli_x/jsonl/uk_test.jsonl | 1,537 |
+| raw/leaks/icij/nodes-addresses.csv | 402,320 |
+| raw/leaks/icij/nodes-entities.csv | 814,616 |
+| raw/leaks/icij/nodes-intermediaries.csv | 26,774 |
+| raw/leaks/icij/nodes-officers.csv | 771,368 |
+| raw/leaks/icij/nodes-others.csv | 2,989 |
+| raw/leaks/icij/relationships.csv | 3,339,271 |
+| raw/news/gdelt/2026-11-08.jsonl | 60 |
+| raw/news/gdelt/2026-11-09.jsonl | 96 |
+| raw/registry/gleif/20261109-1600-gleif-goldencopy-lei2-golden-copy.csv | 3,488,689 |
+| raw/registry/gleif/20261109-1600-gleif-goldencopy-rr-golden-copy.csv | 492,770 |
+| raw/sanctions/ofac/ADD.CSV | 25,257 |
+| raw/sanctions/ofac/ALT.CSV | 20,232 |
+| raw/sanctions/ofac/SDN.CSV | 19,563 |
+| raw/sanctions/ofac/SDN_COMMENTS.CSV | 36 |
+| processed/articles/article_snippets.jsonl | 6 |

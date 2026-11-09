@@ -1,0 +1,160 @@
+sources:
+  gdelt:
+    attribution: GDELT Project
+    license: Free for research use; metadata only, publishers keep copyright
+    name: GDELT DOC 2.0 API
+    url: https://api.gdeltproject.org/api/v2/doc/doc
+  gleif:
+    attribution: Global Legal Entity Identifier Foundation (GLEIF)
+    files:
+      raw/registry/gleif/level1_lei_records.csv.zip:
+        retrieved: '2026-11-09'
+        sha256: a99963e5047a17b6ae566c51e09b0f08269042500871044e247004efd4018478
+        size_bytes: 508533951
+      raw/registry/gleif/level2_relationships.csv.zip:
+        retrieved: '2026-11-09'
+        sha256: 573fa3b564378f4f3efc098a0b97dd6846e1733f51e830eb27a7d8e13c837164
+        size_bytes: 24490052
+    license: GLEIF LEI data terms of use
+    name: GLEIF Golden Copy
+    url: https://goldencopy.gleif.org/api/v2/golden-copies/publishes/latest
+  icij:
+    attribution: International Consortium of Investigative Journalists (ICIJ) Offshore
+      Leaks Database
+    files:
+      raw/leaks/icij/full-oldb.zip:
+        retrieved: '2026-11-09'
+        sha256: 9e5faeed998b5715157bbdb2a600681d1b5bda259ba004c998b3b2836d3c49aa
+        size_bytes: 71935075
+    license: Database ODbL, contents CC BY-SA
+    name: ICIJ Offshore Leaks Database
+    url: https://offshoreleaks.icij.org/pages/database
+  mewsli_x:
+    attribution: Mewsli-X, Hugging Face dataset izhx/mewsli-x
+    files:
+      raw/eval/mewsli_x/jsonl/ar_dev.jsonl:
+        retrieved: '2026-11-09'
+        sha256: 041fd01942d27fe5aa936dfce1a8b16ac859ca71475ae129b9097d3f8667b0ab
+        size_bytes: 139930
+      raw/eval/mewsli_x/jsonl/ar_test.jsonl:
+        retrieved: '2026-11-09'
+        sha256: 5fc8062fa9bd4b11ecfa66e32de69e8c76b5974599f1b11de7345540839cd1b4
+        size_bytes: 639674
+      raw/eval/mewsli_x/jsonl/de_dev.jsonl:
+        retrieved: '2026-11-09'
+        sha256: 173dad76009acc3a661efc3eab13aa7123aa1d7e5e5aa41cd7527660ef980c42
+        size_bytes: 83998
+      raw/eval/mewsli_x/jsonl/de_test.jsonl:
+        retrieved: '2026-11-09'
+        sha256: 1f348e7cc0784c15e59fdc696f7806501a7aa80f1833fa0b60ca502db41fe7ec
+        size_bytes: 397068
+      raw/eval/mewsli_x/jsonl/en_dev.jsonl:
+        retrieved: '2026-11-09'
+        sha256: 4467336e27bbc0d4696626451ac81318d4abe80b839cd2cba37ff1ea5842b3f7
+        size_bytes: 76743
+      raw/eval/mewsli_x/jsonl/en_test.jsonl:
+        retrieved: '2026-11-09'
+        sha256: 3c4054bb95b7799273ecd1997926dd67d802450931fda98f49be07591038a50b
+        size_bytes: 353372
+      raw/eval/mewsli_x/jsonl/es_dev.jsonl:
+        retrieved: '2026-11-09'
+        sha256: e74efce424c0c0506ec86933329840bd18a13a0f45e59e1256912150dd462c4a
+        size_bytes: 92343
+      raw/eval/mewsli_x/jsonl/es_test.jsonl:
+        retrieved: '2026-11-09'
+        sha256: 174788ed2bf161ffdf825491f1ff499c2ac1461f5dfce9531fae66d156363ea3
+        size_bytes: 465658
+      raw/eval/mewsli_x/jsonl/fa_dev.jsonl:
+        retrieved: '2026-11-09'
+        sha256: 79cc0acd237d388df8002955a037683de68fbf692d89d25e9e796783299af57a
+        size_bytes: 26295
+      raw/eval/mewsli_x/jsonl/fa_test.jsonl:
+        retrieved: '2026-11-09'
+        sha256: af36309c3c48b70bf2c20b1d819d191338efb4e49736a8912b3bfd9d61d78f52
+        size_bytes: 170443
+      raw/eval/mewsli_x/jsonl/ja_dev.jsonl:
+        retrieved: '2026-11-09'
+        sha256: 3859f1a7748e6be05bd5f30a09994945ef738e23f9187ee2b3c0972663724e3f
+        size_bytes: 99681
+      raw/eval/mewsli_x/jsonl/ja_test.jsonl:
+        retrieved: '2026-11-09'
+        sha256: b1bf4121e91a89d4b88f24d0be87e88ee0a26039de0640993fc097b277e23314
+        size_bytes: 505352
+      raw/eval/mewsli_x/jsonl/pl_dev.jsonl:
+        retrieved: '2026-11-09'
+        sha256: e19885857c9c990f0a2afff22d81dc30dbe59e3877a220225f914df6267b3585
+        size_bytes: 71069
+      raw/eval/mewsli_x/jsonl/pl_test.jsonl:
+        retrieved: '2026-11-09'
+        sha256: 23ae0ff201dfce80328d06afe8d6d6f1ab25b575a021d38402a943f526bff2a2
+        size_bytes: 352296
+      raw/eval/mewsli_x/jsonl/ro_dev.jsonl:
+        retrieved: '2026-11-09'
+        sha256: a72e82dd51cd1b656a9a66732565da57255d2f40d090771d99ade3b19d5de5f5
+        size_bytes: 38209
+      raw/eval/mewsli_x/jsonl/ro_test.jsonl:
+        retrieved: '2026-11-09'
+        sha256: 022ed10fa9bb5b2e65c55446d37afc694a89483c2276e81a847b596e3c39e207
+        size_bytes: 175126
+      raw/eval/mewsli_x/jsonl/ta_dev.jsonl:
+        retrieved: '2026-11-09'
+        sha256: 6dc7245197d3bc5e2fdbe0d7c458f85dc05fe27838c8a689850f3638c0074219
+        size_bytes: 158140
+      raw/eval/mewsli_x/jsonl/ta_test.jsonl:
+        retrieved: '2026-11-09'
+        sha256: d4a8b556ed1aed2c8f3abc9bf6b4898f70db8f8b96a9334815ef511f036d4bf9
+        size_bytes: 823989
+      raw/eval/mewsli_x/jsonl/tr_dev.jsonl:
+        retrieved: '2026-11-09'
+        sha256: 419d0a382ff68a5212c699c322b0a5a84875df0139564ae3ae048001f424a0fa
+        size_bytes: 62620
+      raw/eval/mewsli_x/jsonl/tr_test.jsonl:
+        retrieved: '2026-11-09'
+        sha256: 6a48889f42ea554f3163c574498ff1be0722e2ffaef6911aa1fda8f263a3d977
+        size_bytes: 291723
+      raw/eval/mewsli_x/jsonl/uk_dev.jsonl:
+        retrieved: '2026-11-09'
+        sha256: 26a26dbc199a25895d127cc274e65cd06ed6b627e5a3e97ecc32e55d98d80b13
+        size_bytes: 114243
+      raw/eval/mewsli_x/jsonl/uk_test.jsonl:
+        retrieved: '2026-11-09'
+        sha256: f427c020ae83bd0e575f89856ce790ed11f97aaeedecafc25137fa69e9b16b03
+        size_bytes: 587902
+    license: Apache-2.0 per dataset card
+    name: Mewsli-X
+    url: https://huggingface.co/datasets/izhx/mewsli-x
+  ofac:
+    attribution: U.S. Department of the Treasury, Office of Foreign Assets Control
+    files:
+      raw/sanctions/ofac/ADD.CSV:
+        retrieved: '2026-11-09'
+        sha256: e8e55508bf439d52b6fd4458a17d570171e36103051a0e7e9123e046943cff12
+        size_bytes: 1697252
+      raw/sanctions/ofac/ALT.CSV:
+        retrieved: '2026-11-09'
+        sha256: 17170d2cf27c996c71b808a466e225da87293c8c0ca8125ea0b62f18dc141e07
+        size_bytes: 1065568
+      raw/sanctions/ofac/CONS_ADVANCED.XML:
+        retrieved: '2026-11-09'
+        sha256: 599771b4fb7363f5f0be0009372bbe23f2e3d39a361ad7d624564656c9c407a0
+        size_bytes: 4580958
+      raw/sanctions/ofac/SDN.CSV:
+        retrieved: '2026-11-09'
+        sha256: 7f43332dae0d1b78ce44c31692d87a3c66e4075bcd97e36d3f18585572ff55b8
+        size_bytes: 5833851
+      raw/sanctions/ofac/SDN_ADVANCED.XML:
+        retrieved: '2026-11-09'
+        sha256: 60698e6e3edd49ac9398576aae7e98e06f2c0bf44cc41e485bca4732ac56805f
+        size_bytes: 128630615
+      raw/sanctions/ofac/SDN_COMMENTS.CSV:
+        retrieved: '2026-11-09'
+        sha256: 8255ce1eb2b85e08bac9e378eb8b28c59ca4926a3645f9421502cc11d48b86f1
+        size_bytes: 48137
+    license: US federal government work, public domain
+    name: OFAC SDN and Consolidated lists
+    url: https://sanctionslistservice.ofac.treas.gov/api/PublicationPreview/exports
+  wikidata:
+    attribution: Wikidata contributors
+    license: CC0
+    name: Wikidata subset
+    url: https://dumps.wikimedia.org/wikidatawiki/entities/

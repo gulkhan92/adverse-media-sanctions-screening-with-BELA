@@ -1,0 +1,34 @@
+<View>
+  <Header value="Language: $lang"/>
+  <Labels name="mentions" toName="text">
+    <Label value="PERSON" background="#2F74D8"/>
+    <Label value="ORG" background="#00A3A3"/>
+  </Labels>
+  <Text name="text" value="$text"/>
+  <Choices name="qid_status" toName="text" choice="single" required="true">
+    <Choice value="linked"/>
+    <Choice value="NIL"/>
+  </Choices>
+  <TextArea name="qid" toName="text" rows="1" placeholder="Wikidata QID, for example Q42 (leave empty for NIL)"/>
+  <Choices name="category" toName="text" choice="single" required="true">
+    <Choice value="fraud"/>
+    <Choice value="corruption_bribery"/>
+    <Choice value="money_laundering"/>
+    <Choice value="sanctions_evasion"/>
+    <Choice value="terrorism_extremism"/>
+    <Choice value="organized_crime"/>
+    <Choice value="regulatory_action"/>
+    <Choice value="other"/>
+    <Choice value="none"/>
+  </Choices>
+  <Choices name="subject_match" toName="text" choice="single">
+    <Choice value="true_match"/>
+    <Choice value="collision"/>
+    <Choice value="not_applicable"/>
+  </Choices>
+  <Choices name="hard_case" toName="text" choice="multiple">
+    <Choice value="common_name"/>
+    <Choice value="transliteration_variant"/>
+    <Choice value="company_named_after_person"/>
+  </Choices>
+</View>
