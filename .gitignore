@@ -11,3 +11,7 @@ data/processed/*
 !data/processed/.gitkeep
 *.parquet
 *.egg-info/
+.pgdata/
+.cache/
+.cache_*.log
+.cache_*

@@ -56,8 +56,12 @@ class FetchResult:
 def is_public_address(address: str) -> bool:
     ip = ipaddress.ip_address(address)
     return not (
-        ip.is_private or ip.is_loopback or ip.is_link_local or ip.is_reserved
-        or ip.is_multicast or ip.is_unspecified
+        ip.is_private
+        or ip.is_loopback
+        or ip.is_link_local
+        or ip.is_reserved
+        or ip.is_multicast
+        or ip.is_unspecified
     )
 
 
@@ -251,9 +255,12 @@ def main() -> None:
         todo = todo[: args.limit]
 
     limiter = DomainLimiter(args.delay)
-    with httpx.Client(
-        headers={"User-Agent": USER_AGENT}, timeout=TIMEOUT, follow_redirects=False
-    ) as client, out_path.open("a", encoding="utf-8") as sink:
+    with (
+        httpx.Client(
+            headers={"User-Agent": USER_AGENT}, timeout=TIMEOUT, follow_redirects=False
+        ) as client,
+        out_path.open("a", encoding="utf-8") as sink,
+    ):
         robots = RobotsCache(client)
         for url in todo:
             result = fetch_with_retry(url, client, robots, limiter)

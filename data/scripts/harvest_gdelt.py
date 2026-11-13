@@ -43,27 +43,124 @@ TOPICS = (
 
 # GDELT source language name -> ISO 639-1 code -> one query phrase per topic.
 LANGUAGES: dict[str, tuple[str, dict[str, str]]] = {
-    "english": ("en", dict(zip(TOPICS, [
-        "fraud", "corruption", "bribery", '"money laundering"', "sanctions",
-        "embezzlement", '"terrorism financing"'], strict=True))),
-    "spanish": ("es", dict(zip(TOPICS, [
-        "fraude", "corrupción", "soborno", '"lavado de dinero"', "sanciones",
-        "malversación", '"financiación del terrorismo"'], strict=True))),
-    "french": ("fr", dict(zip(TOPICS, [
-        "fraude", "corruption", '"pots-de-vin"', '"blanchiment d\'argent"', "sanctions",
-        '"détournement de fonds"', '"financement du terrorisme"'], strict=True))),
-    "german": ("de", dict(zip(TOPICS, [
-        "Betrug", "Korruption", "Bestechung", "Geldwäsche", "Sanktionen",
-        "Veruntreuung", "Terrorismusfinanzierung"], strict=True))),
-    "arabic": ("ar", dict(zip(TOPICS, [
-        "احتيال", "فساد", "رشوة", '"غسيل الأموال"', "عقوبات",
-        "اختلاس", '"تمويل الإرهاب"'], strict=True))),
-    "russian": ("ru", dict(zip(TOPICS, [
-        "мошенничество", "коррупция", "взяточничество", '"отмывание денег"', "санкции",
-        "растрата", '"финансирование терроризма"'], strict=True))),
-    "turkish": ("tr", dict(zip(TOPICS, [
-        "dolandırıcılık", "yolsuzluk", "rüşvet", '"kara para aklama"', "yaptırımlar",
-        "zimmet", '"terörün finansmanı"'], strict=True))),
+    "english": (
+        "en",
+        dict(
+            zip(
+                TOPICS,
+                [
+                    "fraud",
+                    "corruption",
+                    "bribery",
+                    '"money laundering"',
+                    "sanctions",
+                    "embezzlement",
+                    '"terrorism financing"',
+                ],
+                strict=True,
+            )
+        ),
+    ),
+    "spanish": (
+        "es",
+        dict(
+            zip(
+                TOPICS,
+                [
+                    "fraude",
+                    "corrupción",
+                    "soborno",
+                    '"lavado de dinero"',
+                    "sanciones",
+                    "malversación",
+                    '"financiación del terrorismo"',
+                ],
+                strict=True,
+            )
+        ),
+    ),
+    "french": (
+        "fr",
+        dict(
+            zip(
+                TOPICS,
+                [
+                    "fraude",
+                    "corruption",
+                    '"pots-de-vin"',
+                    '"blanchiment d\'argent"',
+                    "sanctions",
+                    '"détournement de fonds"',
+                    '"financement du terrorisme"',
+                ],
+                strict=True,
+            )
+        ),
+    ),
+    "german": (
+        "de",
+        dict(
+            zip(
+                TOPICS,
+                [
+                    "Betrug",
+                    "Korruption",
+                    "Bestechung",
+                    "Geldwäsche",
+                    "Sanktionen",
+                    "Veruntreuung",
+                    "Terrorismusfinanzierung",
+                ],
+                strict=True,
+            )
+        ),
+    ),
+    "arabic": (
+        "ar",
+        dict(
+            zip(
+                TOPICS,
+                ["احتيال", "فساد", "رشوة", '"غسيل الأموال"', "عقوبات", "اختلاس", '"تمويل الإرهاب"'],
+                strict=True,
+            )
+        ),
+    ),
+    "russian": (
+        "ru",
+        dict(
+            zip(
+                TOPICS,
+                [
+                    "мошенничество",
+                    "коррупция",
+                    "взяточничество",
+                    '"отмывание денег"',
+                    "санкции",
+                    "растрата",
+                    '"финансирование терроризма"',
+                ],
+                strict=True,
+            )
+        ),
+    ),
+    "turkish": (
+        "tr",
+        dict(
+            zip(
+                TOPICS,
+                [
+                    "dolandırıcılık",
+                    "yolsuzluk",
+                    "rüşvet",
+                    '"kara para aklama"',
+                    "yaptırımlar",
+                    "zimmet",
+                    '"terörün finansmanı"',
+                ],
+                strict=True,
+            )
+        ),
+    ),
 }
 
 
@@ -144,9 +241,7 @@ def query_api(client: httpx.Client, query: str, timespan: str) -> list[dict[str,
     raise RuntimeError("rate limited after 5 attempts")
 
 
-def run_cycle(
-    languages: list[str], topics: list[str], timespan: str
-) -> dict[str, Any]:
+def run_cycle(languages: list[str], topics: list[str], timespan: str) -> dict[str, Any]:
     log = get_logger("gdelt")
     started = datetime.now(UTC)
     total_new = errors = queries = 0

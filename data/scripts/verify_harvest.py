@@ -17,7 +17,8 @@ from harvest_gdelt import STATUS_PATH
 def evaluate(history: list[dict[str, object]], hours: float, max_gap_minutes: float) -> list[str]:
     now = datetime.now(UTC)
     window = [
-        h for h in history
+        h
+        for h in history
         if datetime.fromisoformat(str(h["finished"])) >= now - timedelta(hours=hours)
     ]
     problems: list[str] = []

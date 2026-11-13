@@ -137,11 +137,11 @@ def test_wikidata_subset_end_to_end(tmp_path: Path, monkeypatch: pytest.MonkeyPa
     forced.write_text("Q103\n")
     monkeypatch.setattr(bws, "PROCESSED_DIR", tmp_path / "out")
     monkeypatch.setattr(bws, "record_file", lambda *_: {})
-    monkeypatch.setattr(
-        sys, "argv", ["x", "--input", str(dump), "--include-qids", str(forced)]
-    )
+    monkeypatch.setattr(sys, "argv", ["x", "--input", str(dump), "--include-qids", str(forced)])
     bws.main()
     table = pq.read_table(tmp_path / "out" / "wikidata" / "entities.parquet").to_pylist()
     assert {r["qid"]: r["kind"] for r in table} == {
-        "Q100": "person", "Q102": "organization", "Q103": "person"
+        "Q100": "person",
+        "Q102": "organization",
+        "Q103": "person",
     }

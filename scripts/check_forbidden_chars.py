@@ -13,7 +13,9 @@ def candidate_files() -> list[Path]:
     try:
         out = subprocess.run(
             ["git", "ls-files", "-co", "--exclude-standard"],
-            check=True, capture_output=True, text=True,
+            check=True,
+            capture_output=True,
+            text=True,
         ).stdout.split("\n")
     except (subprocess.CalledProcessError, FileNotFoundError):
         out = [str(p) for p in Path(".").rglob("*") if p.is_file() and ".venv" not in p.parts]

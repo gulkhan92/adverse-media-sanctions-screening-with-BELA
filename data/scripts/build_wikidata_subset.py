@@ -33,7 +33,23 @@ DUMP_URL = "https://dumps.wikimedia.org/wikidatawiki/entities/latest-all.json.gz
 LANGS = ("en", "es", "fr", "de", "ar", "ru", "tr")
 HUMAN = "Q5"
 ORG_ROOTS = {"Q43229", "Q4830453", "Q783794", "Q22687", "Q7278", "Q327333"}
-PROPERTIES = ("P31", "P279", "P27", "P106", "P39", "P569", "P1278", "P127", "P749", "P355")
+# P17 (country), P495 (country of origin), and P159 (headquarters) are added to the planned
+# list so that organizations carry a country for cross-source matching.
+PROPERTIES = (
+    "P31",
+    "P279",
+    "P27",
+    "P106",
+    "P39",
+    "P569",
+    "P1278",
+    "P127",
+    "P749",
+    "P355",
+    "P17",
+    "P495",
+    "P159",
+)
 
 
 def open_dump(path: Path) -> Iterator[dict[str, Any]]:

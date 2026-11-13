@@ -155,6 +155,19 @@ sources:
     url: https://sanctionslistservice.ofac.treas.gov/api/PublicationPreview/exports
   wikidata:
     attribution: Wikidata contributors
+    files:
+      processed/wikidata/aliases.parquet:
+        retrieved: '2026-11-09'
+        sha256: ea87502df2a4df9a2cd626128ca3523911a15f95b514a0f308a29085b0eec9a0
+        size_bytes: 102753
+      processed/wikidata/claims.parquet:
+        retrieved: '2026-11-09'
+        sha256: 1c81cff99794f430387cca88f2d4c7b2a304915dce0eacb407e00deb43b44b9c
+        size_bytes: 378090
+      processed/wikidata/entities.parquet:
+        retrieved: '2026-11-09'
+        sha256: e8a1833ef4d2e06d437c37ece2c2548597826a05f70367d6709bff4fe9e4ec09
+        size_bytes: 423854
     license: CC0
     name: Wikidata subset
     url: https://dumps.wikimedia.org/wikidatawiki/entities/

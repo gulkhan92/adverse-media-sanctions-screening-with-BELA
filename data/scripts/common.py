@@ -24,7 +24,9 @@ DATA_DIR = Path(__file__).resolve().parents[1]
 RAW_DIR = DATA_DIR / "raw"
 PROCESSED_DIR = DATA_DIR / "processed"
 MANIFEST_PATH = DATA_DIR / "manifest.yaml"
-CONTACT = os.environ.get("ATLAS_CONTACT", "set-ATLAS_CONTACT-env-var")
+CONTACT = os.environ.get(
+    "ATLAS_CONTACT", "https://github.com/gulkhan92/adverse-media-sanctions-screening-with-BELA"
+)
 USER_AGENT = f"AtlasScreeningResearchBot/0.1 (contact: {CONTACT})"
 CHUNK = 1024 * 1024
 
@@ -92,8 +94,11 @@ def file_is_current(source_key: str, path: Path) -> bool:
     """True when the file exists and matches the hash stored in the manifest."""
     if not path.exists():
         return False
-    entry = load_manifest()["sources"].get(source_key, {}).get("files", {}).get(
-        str(path.relative_to(DATA_DIR))
+    entry = (
+        load_manifest()["sources"]
+        .get(source_key, {})
+        .get("files", {})
+        .get(str(path.relative_to(DATA_DIR)))
     )
     return bool(entry and entry["sha256"] == sha256_file(path))
 
