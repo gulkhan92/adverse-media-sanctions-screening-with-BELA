@@ -15,3 +15,7 @@ data/processed/*
 .cache/
 .cache_*.log
 .cache_*
+models/*
+!models/.gitkeep
+!models/manifest.yaml
+.coverage

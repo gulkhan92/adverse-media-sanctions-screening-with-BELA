@@ -23,12 +23,18 @@ jobs:
           python-version: "3.12"
       - name: Forbidden character check
         run: python3 scripts/check_forbidden_chars.py
+      - name: System libraries for PDF rendering
+        run: sudo apt-get update && sudo apt-get install -y libpango-1.0-0 libpangoft2-1.0-0
       - name: Install
-        run: pip install -e '.[dev]'
+        run: pip install -e '.[dev,api,nlp]'
       - name: Lint
         run: ruff check data/scripts apps tests scripts
+      - name: Type check (API and jobs)
+        run: mypy apps/api/atlas/api apps/api/atlas/jobs
+      - name: Static security scan (API and jobs)
+        run: bandit -q -r apps/api/atlas/api apps/api/atlas/jobs -ll
       - name: Tests
-        run: pytest -q
+        run: pytest -q --cov=atlas.api --cov=atlas.jobs --cov-fail-under=80
       - name: Secret scan
         uses: gitleaks/gitleaks-action@v2
         env:

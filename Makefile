@@ -77,3 +77,50 @@ resolve:
 	$(PY) -m atlas.resolution_cli
 report:
 	$(PY) -m atlas.report
+
+# Phase 3: models, services, evaluation ---------------------------------------------
+.PHONY: models models-all llm-up nel-up blink-up eval throughput
+models:
+	$(PY) scripts/fetch_models.py bela-small
+	$(PY) scripts/fetch_models.py blink
+	$(PY) scripts/fetch_models.py llm
+models-all: models
+	$(PY) scripts/fetch_models.py bela-index
+llm-up:
+	services/llm/run_server.sh
+nel-up:
+	PYTHONPATH=services/nel:apps/api .venv/bin/uvicorn atlas_nel.app:app --host 127.0.0.1 --port 8082
+blink-up:
+	PYTHONPATH=services/blink .venv/bin/uvicorn atlas_blink.app:app --host 127.0.0.1 --port 8083
+eval:
+	$(PY) scripts/run_eval.py
+throughput:
+	$(PY) scripts/throughput_test.py
+
+# Phase 4: backend API ----------------------------------------------------------------
+.PHONY: api-up valkey-up api-test api-security audit-verify api-latency
+valkey-up:
+	valkey-server --port 6379 --save '' --appendonly no
+api-up:
+	.venv/bin/uvicorn --factory atlas.api.app:factory --app-dir apps/api --host 127.0.0.1 --port 8000
+api-test:
+	.venv/bin/pytest -q tests/api/test_api_*.py tests/api/test_phase5_*.py \
+		--cov=atlas.api --cov=atlas.jobs --cov-report=term-missing
+api-security:
+	.venv/bin/bandit -q -r apps/api/atlas/api -ll
+	.venv/bin/pip-audit
+audit-verify:
+	$(PY) -m atlas.api.cli verify-audit
+api-latency:
+	$(PY) scripts/api_latency.py --email $(EMAIL) --password $(PASSWORD)
+
+# Phase 5: workers and scheduled jobs ---------------------------------------------------
+.PHONY: worker beat monitor-now
+BROKER ?= redis://127.0.0.1:6379/1
+worker:
+	ATLAS_CELERY_BROKER_URL=$(BROKER) .venv/bin/celery -A atlas.jobs.celery_app worker \
+		-Q match,ingest,nlp,reports -l info
+beat:
+	ATLAS_CELERY_BROKER_URL=$(BROKER) .venv/bin/celery -A atlas.jobs.celery_app beat -l info
+monitor-now:
+	ATLAS_CELERY_BROKER_URL=$(BROKER) .venv/bin/celery -A atlas.jobs.celery_app call atlas.monitor_scan

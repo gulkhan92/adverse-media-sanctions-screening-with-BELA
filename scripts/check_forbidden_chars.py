@@ -19,7 +19,8 @@ def candidate_files() -> list[Path]:
         ).stdout.split("\n")
     except (subprocess.CalledProcessError, FileNotFoundError):
         out = [str(p) for p in Path(".").rglob("*") if p.is_file() and ".venv" not in p.parts]
-    return [Path(p) for p in out if p]
+    # Vendored tokenizer data is third-party and must stay byte-exact.
+    return [Path(p) for p in out if p and not p.startswith("services/nel/vendor/bela/data/")]
 
 
 def main() -> int:
