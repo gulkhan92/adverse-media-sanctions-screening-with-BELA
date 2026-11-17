@@ -1,0 +1,42 @@
+bela/embeddings.pt:
+  model: bela
+  retrieved: '2026-11-13'
+  sha256: c2e38b13703cea69c2c12fe14eba29f00c98e74bd16fd2e01bb29183aac5a309
+  size_bytes: 19765027987
+  url: https://huggingface.co/wannaphong/BELA/resolve/main/embeddings.pt
+bela/index.txt:
+  model: bela
+  retrieved: '2026-11-13'
+  sha256: 65403dd2c236629cba026156acc8fb31c1907525824d512a90679d16ea1fe124
+  size_bytes: 158216234
+  url: https://huggingface.co/wannaphong/BELA/resolve/main/index.txt
+bela/model_mewsli.ckpt:
+  model: bela
+  retrieved: '2026-11-13'
+  sha256: d41a8a6a12c96ca22b6781697e5e0a3a61a1c6ea7083df0757dcd1bc7fc51502
+  size_bytes: 2243429835
+  url: https://huggingface.co/wannaphong/BELA/resolve/main/model_mewsli.ckpt
+bela/model_wiki.ckpt:
+  model: bela
+  retrieved: '2026-11-13'
+  sha256: b13ec79092a6a60db30e3e366aa1e0dc55ecc85a02ab4427ef4d163847a7dd26
+  size_bytes: 2243434498
+  url: https://huggingface.co/wannaphong/BELA/resolve/main/model_wiki.ckpt
+blink/crossencoder_wiki_large.bin:
+  model: blink
+  retrieved: '2026-11-13'
+  sha256: 92165b141c9ee5e8950d75315ead8d9a5af20b6380a0c3dd873e7a055f924040
+  size_bytes: 1340677176
+  url: https://dl.fbaipublicfiles.com/BLINK/crossencoder_wiki_large.bin
+blink/crossencoder_wiki_large.json:
+  model: blink
+  retrieved: '2026-11-13'
+  sha256: dcabcaa5049d97faed8ec37d891df58b046a50f4ceec80eb8b8a4384d712f2df
+  size_bytes: 903
+  url: https://dl.fbaipublicfiles.com/BLINK/crossencoder_wiki_large.json
+llm/Qwen3-4B-Instruct-2507-Q4_K_M.gguf:
+  model: qwen3
+  retrieved: '2026-11-13'
+  sha256: 3605803b982cb64aead44f6c1b2ae36e3acdb41d8e46c8a94c6533bc4c67e597
+  size_bytes: 2497281120
+  url: https://huggingface.co/unsloth/Qwen3-4B-Instruct-2507-GGUF/resolve/main/Qwen3-4B-Instruct-2507-Q4_K_M.gguf
