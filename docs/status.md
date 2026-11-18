@@ -1,6 +1,6 @@
 # Project status
 
-Updated 2026-11-17 (phase 6 added). Phases follow PLAN.md section 6.
+Updated 2026-11-18 (phase 7 added). Phases follow PLAN.md section 6.
 
 | Phase | State | Notes |
 |---|---|---|
@@ -10,15 +10,21 @@ Updated 2026-11-17 (phase 6 added). Phases follow PLAN.md section 6.
 | 4. Backend API and security | Complete except ZAP scan | OWASP ZAP baseline needs a container runtime (see `docs/security.md`) |
 | 5. Screening workflows | Complete | Score, batch CSV, monitoring, graph, reports (ADR-006) |
 | 6. Business data and analytics backend | Complete | Synthetic data, revenue views, metrics (`docs/metrics.md`), forecast, operational analytics, caching, CSV export (ADR-007) |
-| 7 to 10 | Not started | Frontend, hardening, packaging |
+| 7. Frontend foundation and marketing website | Complete except photographs and live screenshots | Design system, 27 marketing routes in 5 interface languages, six articles, legal text, login with MFA, SEO (ADR-008, `docs/frontend_quality.md`). Photographs and Playwright screenshots of the application are open |
+| 8 to 10 | Not started | Product application, hardening, packaging |
 
 ## Verification
 
-- 202 tests pass; line coverage of the API and jobs packages is 92 percent (`make api-test`).
+- 200 Python tests pass and 3 are skipped (they need a Valkey server); 7 web tests pass. Line coverage of the API and jobs packages is 91 percent (`make api-test`).
 - `ruff`, `mypy`, and `bandit` report no findings on the API and jobs packages.
 - Single screening latency against 19,563 watchlist entries: p50 5 ms, p95 10 ms.
 
 ## Known gaps
+
+- No photographs are included: the stock photo sources need an API key or licensed download, so imagery is in-house SVG (the optimization pipeline is ready, see `apps/web/README.md`).
+- Product visuals on the marketing site are illustrative renderings, not screenshots, until the application exists (phase 8).
+- Page copy is English only; the interface chrome is translated and has not had a native review.
+- The web pages send no Content Security Policy yet.
 
 - Retention purge and hard delete of soft-deleted subjects are not implemented.
 - Score weights are the plan defaults and are not fitted to reviewer outcomes.

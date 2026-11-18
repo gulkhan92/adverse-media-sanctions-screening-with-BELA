@@ -1,0 +1,82 @@
+---
+title: "Measuring a screening system: precision, recall, and review workload"
+description: How to evaluate screening software with metrics that reflect what analysts experience, and how to avoid common mistakes in doing so.
+date: 2026-10-05
+tags: [Evaluation, Metrics]
+---
+
+Claims about screening accuracy are easy to make and hard to verify. A vendor who reports that a system is accurate 99 percent of the time has told you very little, because most pairs of names do not match and a system that never raises an alert would also be right most of the time. This article describes the measurements that matter, how to build the data needed to produce them, and the mistakes that make results misleading.
+
+## Start with the confusion matrix
+
+Every screening decision falls into one of four groups.
+
+- **True positive:** an alert for a genuine match.
+- **False positive:** an alert for something that is not a match.
+- **False negative:** a genuine match that raised no alert.
+- **True negative:** correctly no alert.
+
+Everything else is built from these counts.
+
+**Precision** is the share of alerts that are genuine: true positives divided by all alerts. Low precision means analysts spend time on noise.
+
+**Recall** is the share of genuine matches that were found: true positives divided by true positives plus false negatives. Low recall means missed risk, which is usually the more serious failure.
+
+**F1** combines the two into a single number. It is convenient, but it hides the trade-off. Two systems with the same F1 can behave very differently for a team, so report precision and recall alongside it.
+
+## Add the measure analysts feel
+
+Precision and recall describe the model. Reviewers experience workload. Two figures translate between them.
+
+- **Alerts per 1,000 screenings** shows how large the queue will be.
+- **False alerts per true finding** shows how much effort each real finding costs. A system with precision of 0.1 means nine false alerts for every genuine one.
+
+Time to review matters too. If each alert takes an average of several minutes, queue size converts directly into staff hours. A change that halves false alerts at the same recall halves the hours spent on noise, and that is a result a manager can act on.
+
+## Build a gold set
+
+You cannot measure without labeled examples. A gold set is a collection of cases whose correct answer has been decided by people.
+
+1. **Sample realistically.** Draw cases from the kinds of subjects and articles the system will see, including common names, several languages, and difficult spellings.
+2. **Include hard negatives.** Add cases that look like matches but are not, such as namesakes. A set without them overstates precision.
+3. **Label with more than one person.** Have at least two annotators label a subset and measure how often they agree. If humans disagree on 20 percent of cases, no system can be expected to score perfectly on them.
+4. **Write guidelines.** Define in advance what counts as adverse media, what counts as the same entity, and how to treat ambiguous cases.
+5. **Keep a held-out portion.** Use some data to tune thresholds and keep the rest untouched for the final measurement.
+
+Labeling is slow, which is the main reason many systems are published without it. A system with no gold set has unknown precision and recall, and a report should say so plainly.
+
+## Compare against a baseline
+
+A number alone has no meaning. Report the same measures for a simple baseline, such as fuzzy string matching on names, evaluated on the same cases. The question is not whether the new system scores well in isolation but how much it improves on the approach it replaces. Express the improvement in terms of reviewer workload, for example the change in false alerts at a fixed level of recall.
+
+## Slice the results
+
+Aggregate figures hide weak spots. Break results down by:
+
+- **Language**, since coverage and quality differ by language.
+- **Name frequency**, because common names are where collisions occur.
+- **Source type**, such as sanctions lists compared with news.
+- **Alert severity**, since errors on critical cases matter most.
+
+A system that is excellent in English and poor in another language will look good in the average if English dominates the sample.
+
+## Calibration and thresholds
+
+Systems output scores and a threshold turns scores into alerts. Moving the threshold trades precision against recall, so evaluate across the range, for example with a precision and recall curve, and not only at one setting. Check calibration too: among cases scored at 0.8, roughly 80 percent should be genuine if the score is to be read as a probability.
+
+## Common mistakes
+
+- **Testing on data used for tuning.** Thresholds chosen on a set and reported on the same set overstate performance.
+- **Leakage between train and test.** If the same entities appear in both, a model can memorize them.
+- **Ignoring the base rate.** When real matches are rare, precision falls quickly as the screened population grows. Report results at realistic prevalence.
+- **Reporting only the best slice.** Choosing the language or list where the system performs best is a form of selective reporting.
+- **Treating outputs as ground truth.** Using the system's own alerts as labels measures agreement with itself.
+- **Measuring latency on a quiet machine.** Report the hardware, the load, and percentiles beyond the median.
+
+## Keep measuring after launch
+
+Performance changes as data, sources, and subjects change. Reviewer decisions are a continuing source of labels: each alert marked true match or false positive is a data point. Tracking precision over time from these decisions shows drift early and provides material to refit weights and thresholds.
+
+## Summary
+
+Report precision, recall, and workload, not a single accuracy figure. Build a gold set with realistic and hard cases, compare with a baseline on the same data, slice the results, and say clearly what has not been measured. A screening system that publishes its limits is easier to trust than one that publishes only its best number.

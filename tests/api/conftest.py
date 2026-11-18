@@ -70,6 +70,7 @@ ROLES = {
 }
 RESET = (
     "TRUNCATE tenants, watchlist_sources, entities, articles, plans, contact_requests, "
+    "newsletter_subscribers, "
     "monitoring_runs, alert_stats_daily "
     "RESTART IDENTITY CASCADE"
 )

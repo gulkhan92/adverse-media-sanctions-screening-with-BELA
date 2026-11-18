@@ -1,0 +1,12 @@
+node_modules
+.next
+out
+next-env.d.ts
+*.tsbuildinfo
+reports/*.html
+reports/screens
+reports/tmp
+test-results
+playwright-report
+reports/lighthouse-*
+!reports/lighthouse-home.report.json

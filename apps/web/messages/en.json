@@ -1,0 +1,74 @@
+{
+  "utility": {
+    "support": "Support",
+    "status": "Status",
+    "developers": "Developers",
+    "language": "Language"
+  },
+  "nav": {
+    "platform": "Platform",
+    "solutions": "Solutions",
+    "industries": "Industries",
+    "resources": "Resources",
+    "pricing": "Pricing",
+    "company": "Company",
+    "login": "Log in",
+    "demo": "Request a demo",
+    "menu": "Menu",
+    "close": "Close",
+    "primary": "Primary",
+    "skip": "Skip to main content",
+    "home": "Home"
+  },
+  "footer": {
+    "newsletter": "Newsletter",
+    "newsletterText": "Product and methodology notes, a few times a year.",
+    "email": "Email address",
+    "subscribe": "Subscribe",
+    "disclaimer": "Matches are leads for human review and not legal determinations.",
+    "sources": "Data source credits",
+    "sourcesText": "Sanctions data from the U.S. Treasury OFAC lists. Entity data from Wikidata (CC0), GLEIF (open terms of use), and the ICIJ Offshore Leaks Database (ODbL, contents CC BY-SA). News metadata from GDELT.",
+    "rights": "All rights reserved.",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "cookies": "Cookies",
+    "demoLabel": "Demo environment. All customer and revenue figures are synthetic."
+  },
+  "cookie": {
+    "title": "Cookies",
+    "text": "This site uses only the cookies it needs to work, and stores your language choice. We do not use advertising or analytics cookies.",
+    "accept": "Understood",
+    "more": "Cookie policy"
+  },
+  "login": {
+    "title": "Log in",
+    "email": "Work email",
+    "password": "Password",
+    "submit": "Log in",
+    "forgot": "Forgot your password?",
+    "code": "Authentication code",
+    "recovery": "Use a recovery code instead",
+    "verify": "Verify",
+    "mfaTitle": "Two-step verification",
+    "mfaText": "Enter the 6 digit code from your authenticator app.",
+    "setupTitle": "Set up two-step verification",
+    "setupText": "Scan the code with an authenticator app, then enter the 6 digit code it shows.",
+    "saveCodes": "Save these recovery codes. Each can be used once.",
+    "continue": "Continue to the platform",
+    "demoNotice": "Demo environment. All tenants, subscriptions, and revenue figures are synthetic."
+  },
+  "forgot": {
+    "title": "Reset your password",
+    "text": "Enter your work email. If an account exists, we will send a reset link.",
+    "submit": "Send reset link",
+    "sent": "If the account exists, a reset message has been sent.",
+    "back": "Back to log in"
+  },
+  "reset": {
+    "title": "Choose a new password",
+    "password": "New password",
+    "submit": "Update password",
+    "done": "Password updated. You can now log in.",
+    "missing": "This reset link is incomplete. Request a new one."
+  }
+}

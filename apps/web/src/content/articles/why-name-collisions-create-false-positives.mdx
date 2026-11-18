@@ -1,0 +1,58 @@
+---
+title: Why name collisions create most false positives in adverse media screening
+description: Common names, transliteration, and missing context turn a search for one person into hundreds of irrelevant results. Here is how that happens and what reduces it.
+date: 2026-11-02
+tags: [Adverse media, False positives]
+---
+
+Adverse media screening asks a simple question: is there credible negative news about this person or company? The difficulty is that news does not refer to people by a unique identifier. It refers to them by name, and names are shared, abbreviated, translated, and misspelled. Most of the alerts that analysts clear are not wrong because the software misread an article. They are wrong because the article is about a different person who happens to have the same name.
+
+## What a name collision is
+
+A name collision occurs when two or more distinct entities are written the same way. It takes several forms.
+
+**Shared personal names.** A subject called Maria Garcia or Wei Zhang has thousands of namesakes. Any article mentioning the name matches, whether it concerns a fraud case, a charity, or a sports result.
+
+**Shared organization names.** Company names are reused across countries and across time. A trading company with a generic name may exist in dozens of jurisdictions, and a name that was once used by a sanctioned business may later be taken by an unrelated one.
+
+**Partial matches.** Screening systems that allow some tolerance, which they must to catch spelling variants, also match names that merely resemble each other. Tolerance that catches Mohammed and Muhammad also produces hits on unrelated names.
+
+**Transliteration.** A name written in Arabic, Cyrillic, or Chinese script has several accepted Latin spellings. A search must cover them, and every added spelling widens the set of names that can collide.
+
+## Why more tolerance is not the answer
+
+The usual response to missed matches is to loosen matching. This raises recall and lowers precision. If a system returns every article containing a fuzzy match to the subject name, the analyst has to read them all. In practice reviewers then develop shortcuts, such as clearing results for common names quickly, and the risk moves from the software to the review process.
+
+Tightening matching has the opposite effect. Missed true matches are the costly error in screening, so most teams accept a high false positive rate rather than risk them. The result is a queue in which most items are noise.
+
+## Context separates the people
+
+A person reading an article does not decide who it is about from the name alone. They use context: the country, the profession, the company, the age, the other people mentioned. Software can use the same signals.
+
+- **Attributes of the subject.** Date of birth, country, and known roles narrow the candidates. A reviewer can see that the article describes a retired surgeon and the subject is a logistics director.
+- **Co-mentioned entities.** If an article names the subject's employer or a known associate, the link is stronger. If it names entirely different organizations, the link is weaker.
+- **Knowledge about the entity.** If the article's name matches an entity in a knowledge base, the system can check whether the description of that entity fits the context of the passage.
+
+Using these signals is what the term entity linking refers to. Instead of asking whether a string appears in the text, the system asks which known entity a mention refers to, and whether that entity is the subject.
+
+## The unlinked remainder
+
+Not every person is in a knowledge base. Private individuals and small businesses rarely have an entry, and a news story about one cannot be linked to an entity that does not exist. A well-designed system keeps such mentions as unlinked rather than forcing a wrong link. It then compares them with subjects using name similarity and the attributes available in the passage, and it treats the result as weaker evidence. Forcing a link is worse than leaving the mention open, because it makes a guess look like a fact.
+
+## Measuring the effect
+
+Whether context actually reduces false positives is an empirical question, and it should be answered on labeled data. The relevant measurement is the number of alerts a reviewer must read per true finding, compared across approaches on the same set of articles. A system that reports only its recall, or only its precision, hides the trade-off that matters to a team with a fixed number of analysts.
+
+Name collisions deserve their own analysis. For subjects with common names, count how many alerts refer to a different entity under each approach. This identifies where the remaining noise comes from, and it shows whether improvements help the hard cases or only the easy ones.
+
+## What to do about it
+
+Teams that want fewer collision-driven false positives can act on several fronts.
+
+1. **Collect more attributes at onboarding.** Date of birth, country, and identifiers allow the system to rule out namesakes. A name alone is the weakest possible input.
+2. **Prefer systems that link entities, not strings.** Ask how the system decides that a mention refers to the subject and what evidence it shows.
+3. **Show the evidence.** A reviewer who can see the passage, the linked entity, and the reason for the score can clear or confirm an alert in seconds.
+4. **Record decisions.** Clearing the same collision repeatedly is wasted work. Decisions on earlier alerts can inform later ones.
+5. **Measure.** Track alerts per true finding and the share of alerts cleared as a different person.
+
+Name collisions will not disappear, because the underlying ambiguity is in the world and not in the software. The goal is to make the ambiguity visible and cheap to resolve, so that analyst time goes to the cases that carry real risk.

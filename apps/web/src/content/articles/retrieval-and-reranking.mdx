@@ -1,0 +1,73 @@
+---
+title: "Retrieval and re-ranking: combining fast and precise entity linking"
+description: Why entity linking is built in stages, what each stage contributes, and how to route each mention to the cheapest method that can decide it.
+date: 2026-10-19
+tags: [Entity linking, Architecture]
+---
+
+No single method for linking names to entities is both fast and precise. Fast methods look at a mention and an entity separately and compare summaries of each. Precise methods look at them together and can notice detail, but they cost much more per comparison. Staged systems use the fast method to narrow the field and the precise method to decide among the survivors. This article explains the stages and how to decide when to use each.
+
+## Stage one: retrieval
+
+The first stage must handle a very large number of entities, so it must be cheap per entity. A bi-encoder does this. It embeds the mention with its context into a vector, and it embeds each entity description into a vector ahead of time. The entity vectors are stored in an index. At query time the system embeds the mention once and asks the index for the nearest vectors.
+
+Because entity vectors are precomputed, the cost of a query does not grow with the number of entities in the way a full comparison would. An approximate nearest neighbor index, such as HNSW, returns candidates in milliseconds.
+
+The weakness of this stage is that the mention and the entity never see each other. Each is squeezed into a single vector before comparison, so subtle differences can disappear. Two entities with similar descriptions may receive nearly equal scores. Retrieval is therefore judged on recall at a small number of candidates: does the right entity appear somewhere in the top ten? It is not expected to place the right entity first.
+
+## Stage two: re-ranking
+
+The second stage takes the short list and scores each candidate more carefully. A cross-encoder receives the mention, its context, and the candidate description as one input and attends across all of them. It can notice that the context mentions a port city and that only one candidate is described as a port operator.
+
+Cross-encoders are accurate and slow. Running one against millions of entities is impractical, but running it against ten candidates is fine. That is the reason for staging: precision is spent only where the list is short.
+
+BLINK is a well-known example of this design. A bi-encoder retrieves candidates and a cross-encoder reranks them. BLINK was built for English, so a system serving other languages uses it where the text is English and relies on multilingual retrieval elsewhere.
+
+## Stage three: adjudication
+
+Some cases remain unclear after re-ranking. The top two scores are close, or the passage is too short to separate them. A small language model running locally can be asked a constrained question: given this passage and these candidates, which one is meant, or is none of them correct? Constraining the answer to the candidate list, and checking that the output has the expected form, reduces the risk of invented answers.
+
+Because the passage comes from the open web, it must be treated as untrusted. Text inside an article may contain instructions aimed at the model. The system should delimit the passage clearly, tell the model that the passage is data, validate the output against a schema, and never let model output trigger actions directly.
+
+## Routing
+
+If every mention went through all three stages the system would be accurate but slow and expensive. A router sends each mention to the cheapest stage that can decide it, using confidence from the earlier stage.
+
+A simple policy looks like this.
+
+1. **Accept** a link when the first-stage score is high and the margin over the second candidate is large.
+2. **Reject** when the best score is below a low threshold, and keep the mention as unlinked.
+3. **Rerank** when the score falls between the two thresholds.
+4. **Adjudicate** when the reranker's top two candidates are within a small margin.
+
+The thresholds are parameters, and they should be fitted on labeled data and not chosen by feel. The share of mentions that reaches each stage is a useful operational measure. If nearly all reach the language model, the early thresholds are too strict, and throughput will suffer.
+
+## Calibration
+
+Scores from different models are not directly comparable, and a score of 0.9 from one model does not mean a 90 percent chance of being right. Calibration maps scores to estimated probabilities of being correct using labeled examples. Calibrated scores allow a router to apply a single, meaningful threshold and allow downstream scoring to treat match confidence consistently.
+
+A calibration curve that plots predicted confidence against observed accuracy shows whether a model is overconfident. Reporting it alongside accuracy tells a reader whether confidence values can be trusted.
+
+## Costs to measure
+
+A staged system has several costs, and each should be measured and not assumed.
+
+- **Latency per stage** and the overall distribution, including the slowest cases and not just the median.
+- **Throughput** of the ingestion pipeline in passages per second on the hardware in use.
+- **Share of mentions per route**, which shows where the compute goes.
+- **Accuracy per route**, to confirm that cheap decisions are not systematically worse.
+
+Because linking runs at ingestion time and results are stored, the cost does not fall on the analyst. A screening request reads stored links, so the user-facing latency is the cost of a database lookup, not of the models.
+
+## Failure modes
+
+Staged systems fail in specific ways.
+
+- **Recall loss at retrieval.** If the right entity is not in the short list, no later stage can recover it. Increasing the list size helps at a cost.
+- **Over-trust in the reranker.** A cross-encoder trained on one domain may be confidently wrong on another. Check it on your own data.
+- **Threshold drift.** Thresholds fitted on one set of languages or sources may not suit new ones. Monitor the share of mentions per route over time.
+- **Adjudicator error.** A language model can choose a candidate that sounds plausible. Keep its decisions auditable and sample them for review.
+
+## Summary
+
+Retrieval gives breadth cheaply, re-ranking gives precision on a short list, and adjudication handles the hard remainder. A router and calibrated scores tie the stages together. The design principle is to spend compute where the uncertainty is, and to report results per stage so that each can be improved on its own.

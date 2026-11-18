@@ -1,0 +1,65 @@
+---
+title: "Reading ownership networks: what registry and leak data can and cannot tell you"
+description: Ownership graphs help find hidden links to sanctioned or high-risk parties, but the sources are partial. Learn how to read them without over-reading them.
+date: 2026-10-12
+tags: [Network analysis, Data sources]
+---
+
+A company can be clean on every list and still be controlled by someone who is not. Ownership analysis tries to find that control by following links from a subject to the people and organizations behind it. This article describes the main public sources, what a graph built from them can show, and how to avoid drawing conclusions the data cannot support.
+
+## Why ownership matters
+
+Sanctions rules and due diligence policies often extend to entities owned or controlled by listed parties, usually above an ownership threshold, either directly or through intermediaries. A name search on the subject will not find a link that sits two or three companies up the chain. Following ownership is how teams look for it.
+
+## The main public sources
+
+**Legal entity identifier records.** The Global LEI System assigns each participating legal entity an identifier and publishes basic data about it, including its legal name, jurisdiction, and registered address. It also publishes relationship records that state a direct or ultimate parent where the entity has reported one. The data is open and structured. It covers entities that chose or were required to obtain an identifier, which skews toward financial institutions and larger companies.
+
+**Corporate registries.** National and regional registries record companies, directors, and sometimes shareholders. Access, completeness, and format differ widely. Some are free and searchable, some charge, and some publish beneficial ownership while others do not.
+
+**Leak databases.** The Offshore Leaks Database from the International Consortium of Investigative Journalists publishes entities, officers, intermediaries, and addresses drawn from several investigations into offshore structures. It is valuable because it shows structures that registries do not. It reflects the documents that were leaked and investigated, so it is far from a census.
+
+**News co-occurrence.** Two entities mentioned together in news are sometimes related. This is a weaker signal than a recorded relationship, but it can point to associations that no registry captures.
+
+## What a graph built from them can show
+
+Putting these sources into a graph turns separate records into a map. Analysts can start at a subject and expand to its parents, subsidiaries, officers, and addresses, then filter by relationship type and source. A few patterns often matter.
+
+- **A listed party within a few steps** of the subject.
+- **Shared addresses or officers** across entities that otherwise look unrelated.
+- **Layered structures** in which ownership passes through several jurisdictions before reaching a person.
+- **Central nodes** that connect many entities, which may be service providers, not beneficiaries.
+
+A graph is a tool for finding questions worth asking. It is not a finding on its own.
+
+## What it cannot tell you
+
+**Absence is not evidence.** If a graph shows no link between two entities, the sources may simply not record it. Missing data is the normal condition, not an exception.
+
+**Presence is not wrongdoing.** Appearing in a leak database does not establish that an entity or person did anything unlawful. Offshore structures have lawful uses. The database states this about its own contents, and a screening workflow should repeat it where a reviewer sees the record.
+
+**Dates matter.** Records describe ownership at the time they were filed. A relationship recorded years ago may have ended, and a new one may not yet be recorded.
+
+**Identity matching still applies.** Linking a name in a leak record to a subject has the same ambiguity as any other name match. Two officers with the same name are not necessarily the same person.
+
+**Thresholds vary.** A rule may count ownership above 50 percent, or 25 percent, or control by other means. A graph with edges but no percentages cannot answer a question that depends on a percentage.
+
+## Good practice for analysts
+
+1. **Open the source of every edge.** Each link should show where it came from, when, and under what terms. If the source is not visible, the edge should not drive a decision.
+2. **Distinguish edge types.** A recorded parent relationship, a shared address, and a news co-mention are different strengths of evidence. Show them differently.
+3. **Limit depth deliberately.** Following more hops finds more, and it also finds more coincidence. Decide in advance how far a path may extend before it stops being meaningful.
+4. **Write down the reasoning.** Attach the paths examined, including the ones that led nowhere, to the case. A later reviewer should be able to see what was checked.
+5. **State the limits in the report.** A report should say which sources were consulted and that they are partial.
+
+## A worked reading
+
+Suppose a screening of a logistics company finds no list match, but the graph shows that its registered address is shared with three other companies, and that one of them has an officer who also appears in a leak database. Each fact is a lead and none is a conclusion. The analyst checks whether the shared address is a registered agent used by many unrelated clients, which is common. They check whether the officer's name is shared by other people. They then record that the structure was reviewed, which sources were used, and why no escalation followed. If the same address had hosted a listed entity, the weighing would change.
+
+## Handling the data responsibly
+
+Ownership data about individuals is personal data. Use it for the purpose it was gathered for, restrict access to people who need it, keep a record of who viewed it, and respect the licenses of each source. The Offshore Leaks Database is published under an open database license with attribution and share-alike terms, and the LEI data is published under open terms of use. Check the current terms before you redistribute.
+
+## Summary
+
+Ownership networks make hidden structure visible and help prioritize which cases deserve a closer look. They are built from partial, dated, and differently reliable sources, so their output must be read as leads. A graph that shows its sources and its gaps supports good decisions. A graph that hides them invites false confidence in both directions.

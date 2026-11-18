@@ -51,7 +51,7 @@ with `python -m atlas.api.cli create-user EMAIL platform_admin`.
 | Platform | `GET /tenants`, `POST /tenants`, `GET /ingestion/status`, `GET /admin/audit/verify` | `platform` |
 | Admin | `GET/POST /admin/users`, `PATCH /admin/users/{id}`, `GET/POST /admin/api-keys`, `DELETE /admin/api-keys/{id}`, `GET/PUT /admin/risk-config`, `GET /billing/plan`, `GET /billing/invoices` | `admin` |
 | Admin | `GET /admin/audit` | `audit` |
-| Other | `GET /tenants/current`, `GET /users/me`, `POST /contact/demo-request` (public, honeypot, rate limited), `GET /health/live`, `GET /health/ready`, `GET /stream/alerts` (SSE, `view`) | as listed |
+| Other | `GET /tenants/current`, `GET /users/me`, `POST /contact/demo-request` (public, honeypot, rate limited, consent required; stores role, industry, and consent time), `POST /contact/newsletter` and `POST /contact/newsletter/confirm?token=` (public, double opt-in), `GET /health/live`, `GET /health/ready`, `GET /stream/alerts` (SSE, `view`) | as listed |
 
 ## Alert review rules
 

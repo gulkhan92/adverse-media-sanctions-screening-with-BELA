@@ -1,0 +1,74 @@
+{
+  "utility": {
+    "support": "Soporte",
+    "status": "Estado",
+    "developers": "Desarrolladores",
+    "language": "Idioma"
+  },
+  "nav": {
+    "platform": "Plataforma",
+    "solutions": "Soluciones",
+    "industries": "Sectores",
+    "resources": "Recursos",
+    "pricing": "Precios",
+    "company": "Empresa",
+    "login": "Iniciar sesión",
+    "demo": "Solicitar una demostración",
+    "menu": "Menú",
+    "close": "Cerrar",
+    "primary": "Principal",
+    "skip": "Saltar al contenido principal",
+    "home": "Inicio"
+  },
+  "footer": {
+    "newsletter": "Boletín",
+    "newsletterText": "Notas de producto y metodología, unas pocas veces al año.",
+    "email": "Correo electrónico",
+    "subscribe": "Suscribirse",
+    "disclaimer": "Las coincidencias son indicios para revisión humana y no determinaciones legales.",
+    "sources": "Créditos de fuentes de datos",
+    "rights": "Todos los derechos reservados.",
+    "privacy": "Privacidad",
+    "terms": "Términos",
+    "cookies": "Cookies",
+    "demoLabel": "Entorno de demostración. Todas las cifras de clientes e ingresos son sintéticas.",
+    "sourcesText": "Datos de sanciones de las listas OFAC del Tesoro de EE. UU. Datos de entidades de Wikidata (CC0), GLEIF (términos de uso abiertos) y la base de datos ICIJ Offshore Leaks (ODbL, contenidos CC BY-SA). Metadatos de noticias de GDELT."
+  },
+  "cookie": {
+    "title": "Cookies",
+    "text": "Este sitio solo usa las cookies necesarias para funcionar y guarda su idioma. No usamos cookies publicitarias ni de analítica.",
+    "accept": "Entendido",
+    "more": "Política de cookies"
+  },
+  "login": {
+    "title": "Iniciar sesión",
+    "email": "Correo de trabajo",
+    "password": "Contraseña",
+    "submit": "Iniciar sesión",
+    "forgot": "¿Olvidó su contraseña?",
+    "code": "Código de autenticación",
+    "verify": "Verificar",
+    "mfaTitle": "Verificación en dos pasos",
+    "mfaText": "Introduzca el código de 6 dígitos de su aplicación de autenticación.",
+    "demoNotice": "Entorno de demostración. Todos los clientes, suscripciones e ingresos son sintéticos.",
+    "recovery": "Usar un código de recuperación",
+    "setupTitle": "Configurar la verificación en dos pasos",
+    "setupText": "Escanee el código con una aplicación de autenticación e introduzca el código de 6 dígitos.",
+    "saveCodes": "Guarde estos códigos de recuperación. Cada uno sirve una vez.",
+    "continue": "Continuar a la plataforma"
+  },
+  "forgot": {
+    "title": "Restablecer la contraseña",
+    "submit": "Enviar enlace",
+    "back": "Volver a iniciar sesión",
+    "text": "Introduzca su correo de trabajo. Si existe una cuenta, enviaremos un enlace.",
+    "sent": "Si la cuenta existe, se ha enviado un mensaje de restablecimiento."
+  },
+  "reset": {
+    "title": "Elija una nueva contraseña",
+    "password": "Nueva contraseña",
+    "submit": "Actualizar contraseña",
+    "done": "Contraseña actualizada. Ya puede iniciar sesión.",
+    "missing": "El enlace está incompleto. Solicite uno nuevo."
+  }
+}

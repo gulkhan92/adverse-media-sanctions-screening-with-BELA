@@ -1,0 +1,74 @@
+---
+title: "Responsible use of automated screening: human review, explainability, and error handling"
+description: Automated screening can support compliance decisions, but only when people stay accountable, results can be explained, and errors are handled openly.
+date: 2026-09-28
+tags: [Responsible use, Governance]
+---
+
+Screening software shapes decisions that affect people: whether an account is opened, a payment is released, or a relationship ends. An alert that is wrong can cost an innocent person access to services, and a miss can allow serious harm. Responsible use is not an add-on to the technology. It is a set of design and operating choices that determine whether the software helps or harms. This article sets out the main ones.
+
+## Matches are leads, not determinations
+
+The most important principle is also the simplest. A screening result is a lead for human review. It is not a legal finding that a person is sanctioned, corrupt, or dangerous. The software is comparing records and text, and its output reflects the quality of both. Decisions that affect people belong to accountable humans who can weigh context the system cannot see.
+
+This has practical consequences.
+
+- **Show the principle where decisions are made.** A statement that matches are leads for human review should appear on every result and every report, not only in a policy document.
+- **Do not let a score act as a verdict.** Automatic rejection on a score alone removes the human from the loop. Where automation is used for speed, restrict it to clearing obviously irrelevant results and route anything uncertain to a person.
+- **Keep reasons attached.** The person reviewing must be able to see why an alert exists.
+
+## Explainability
+
+A reviewer cannot judge a result they cannot understand. For screening, explanation has a concrete form.
+
+**The score breakdown.** If a risk score combines match confidence, severity, recency, and source reliability, show each component and its weight. Reviewers learn which factors drive results and can challenge the ones that look wrong.
+
+**The evidence.** Show the passage that produced the alert, with the mention highlighted, along with the source and date. Evidence turns an assertion into something checkable.
+
+**The route.** Record how a link was made, for example by the primary linker, by a second-stage reranker, or by a language model. A link that needed adjudication deserves more scrutiny than one accepted at high confidence.
+
+**The limits.** Say what the system does not know. A subject with no alerts has not been shown to be clear. It has not matched anything in the sources available.
+
+## Handling errors
+
+Every screening system makes errors. Responsible operation assumes this and plans for it.
+
+**False positives** cost time and can harm the person flagged, especially if the flag spreads to other systems. Give analysts a fast way to record that an alert was a different person, and use that decision so the same collision is not raised repeatedly.
+
+**False negatives** are harder to see because nothing is raised. Sample cleared cases periodically for review, test the system with known examples, and track sources for coverage gaps.
+
+**Disputes.** Where a person is affected, they need a route to correct inaccurate data. Document how a challenge is received, who reviews it, and what happens to the record if it is wrong.
+
+**Corrections.** When a source is corrected or an article retracted, linked findings should be updated. Keep a record of the change.
+
+## Bias and coverage
+
+Screening systems are not equally accurate across names, languages, and regions. Models trained on more data in some languages perform better there. Knowledge bases describe some regions in greater detail than others. Names from certain cultures may be shared more widely, producing more collisions.
+
+Measure these differences instead of assuming them away. Report results by language and by name frequency, and be willing to publish weak results. Where a language or region is poorly covered, tell users so that they can apply more caution there.
+
+## Untrusted inputs
+
+Systems that read news and web pages face adversarial text. An article can contain content crafted to mislead a language model, for example instructions embedded in a page. Treat all article text as untrusted data. Isolate it from instructions, validate model output against a strict format, and ensure that model output cannot trigger actions by itself. These measures protect the integrity of results, which is a safety property and not only a security one.
+
+## Accountability and records
+
+Keep an audit trail of who did what and when. The log should capture screenings, alert decisions with their stated reasons, changes to configuration such as thresholds, and access to sensitive data. Make the log tamper-evident so that its integrity can be checked. Records support internal review, regulator inquiries, and the correction of mistakes.
+
+Assign ownership. Someone should be responsible for the system's configuration, for monitoring its performance, and for deciding when it needs retraining or retirement.
+
+## Privacy and proportion
+
+Screening processes personal data and sometimes sensitive allegations. Collect what is needed and no more, restrict access by role, separate customers' data from each other, and set retention periods. Rely on public and lawfully obtained sources, and check each source's license for the intended use. Some datasets permit non-commercial use only and are unsuitable for commercial screening.
+
+## What to ask of any screening product
+
+1. Can I see why each alert was raised, including the evidence?
+2. Are error rates measured on realistic data, with a baseline, by language?
+3. What happens when a result is wrong, and how is it corrected?
+4. Who can see what, and where is that recorded?
+5. What does the vendor say it does not do?
+
+## Summary
+
+Responsible use rests on a few commitments: keep people accountable for decisions, make results explainable, plan for errors, measure bias, defend against hostile input, and keep records. A system that supports those commitments makes analysts faster and more careful. One that hides its reasoning asks them to trust it, and trust should be earned by evidence.

@@ -1,0 +1,22 @@
+{
+  "generated_at": "2026-11-18T13:48:40+00:00",
+  "languages": {
+    "value": 97,
+    "source": "BELA model coverage (Plekhanov et al., 2023)"
+  },
+  "watchlist_entries": {
+    "value": 19563,
+    "source": "Indexed in the development database"
+  },
+  "latency_ms": {
+    "p50": 5,
+    "p95": 10,
+    "source": "docs/api_latency.md: 150 sequential requests on one machine"
+  },
+  "evaluation": {
+    "available": false,
+    "false_match_reduction_pct": null,
+    "systems": []
+  },
+  "demo_tenants": 159
+}

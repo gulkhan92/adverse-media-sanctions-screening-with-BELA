@@ -134,3 +134,27 @@ business-load:
 business-refresh:
 	infra/dev_db.sh psql -c "SELECT refresh_business_views()"
 business: business-data business-load
+
+# Phase 7: web frontend ----------------------------------------------------------------
+.PHONY: web-install web-dev web-build web-start web-check web-metrics web-images web-e2e web-audit
+web-install:
+	cd apps/web && npm ci
+web-metrics:
+	$(PY) scripts/build_web_metrics.py
+web-images:
+	cd apps/web && npm run images
+web-dev:
+	cd apps/web && npm run dev
+web-build: web-metrics
+	cd apps/web && npm run build
+web-start:
+	cd apps/web && npm run start
+# Lint, types, unit tests. Needs no running services.
+web-check:
+	cd apps/web && npm run lint && npm run typecheck && npm test
+# Needs `make api-up` and `make web-start`. E2E_PASSWORD must satisfy the password policy.
+web-e2e:
+	E2E_PASSWORD=$(E2E_PASSWORD) $(PY) scripts/seed_web_e2e.py
+	cd apps/web && E2E_PASSWORD=$(E2E_PASSWORD) node scripts/e2e.mjs
+web-audit:
+	cd apps/web && node scripts/audit.mjs

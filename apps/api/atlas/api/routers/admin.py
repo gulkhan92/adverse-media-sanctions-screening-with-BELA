@@ -18,6 +18,7 @@ from atlas.api.rbac import ADMIN, AUDIT, KEY_SCOPES, PLATFORM, TENANT_ROLES
 from atlas.api.schemas import (
     ApiKeyCreate,
     DemoRequest,
+    NewsletterSubscribe,
     RiskConfig,
     TenantCreate,
     UserCreate,
@@ -348,16 +349,20 @@ def demo_request(
     state.limiter.check(f"contact:{client_ip(request)}", state.settings.limit_public_form)
     if body.website:  # honeypot field: accepted silently, not stored
         return {"status": "Thank you. We will be in touch."}
+    if not body.consent:
+        raise bad_request("Consent to be contacted is required.", "consent-required")
     import hashlib
 
     with state.db.session(PLATFORM_SCOPE) as conn:
         conn.execute(
-            "INSERT INTO contact_requests (name, email, company, message, ip_hash) "
-            "VALUES (%s, %s, %s, %s, %s)",
+            "INSERT INTO contact_requests (name, email, company, role, industry, message, "
+            "consent_at, ip_hash) VALUES (%s, %s, %s, %s, %s, %s, now(), %s)",
             (
                 body.name,
                 body.email.lower(),
                 body.company,
+                body.role,
+                body.industry,
                 body.message,
                 hashlib.sha256(client_ip(request).encode()).hexdigest()[:32],
             ),
@@ -370,3 +375,46 @@ def demo_request(
             request_id=request_id(request),
         )
     return {"status": "Thank you. We will be in touch."}
+
+
+@contact.post("/newsletter", status_code=202, summary="Subscribe to the newsletter (double opt-in)")
+def newsletter_subscribe(
+    body: NewsletterSubscribe, request: Request, state: Any = Depends(_public)
+) -> dict[str, str]:
+    state.limiter.check(f"newsletter:{client_ip(request)}", state.settings.limit_public_form)
+    message = {"status": "Check your inbox to confirm the subscription."}
+    if body.website:
+        return message
+    email = body.email.lower()
+    token = new_token()
+    with state.db.session(PLATFORM_SCOPE) as conn:
+        row = conn.execute(
+            "INSERT INTO newsletter_subscribers (email, token_hash) VALUES (%s, %s) "
+            "ON CONFLICT (email) DO UPDATE SET token_hash = EXCLUDED.token_hash "
+            "WHERE newsletter_subscribers.confirmed_at IS NULL RETURNING id",
+            (email, hash_token(token, state.settings.token_pepper)),
+        ).fetchone()
+    if row:  # already confirmed addresses receive nothing and the response is identical
+        state.mailer.send(
+            email,
+            "Confirm your subscription",
+            "Confirm the subscription with this link: "
+            f"{state.settings.web_origin}/newsletter/confirm?token={token}\n"
+            "If you did not request this, ignore this message.",
+        )
+    return message
+
+
+@contact.post("/newsletter/confirm", summary="Confirm a newsletter subscription")
+def newsletter_confirm(
+    token: str = Query(min_length=16, max_length=200), state: Any = Depends(_public)
+) -> dict[str, str]:
+    with state.db.session(PLATFORM_SCOPE) as conn:
+        row = conn.execute(
+            "UPDATE newsletter_subscribers SET confirmed_at = coalesce(confirmed_at, now()) "
+            "WHERE token_hash = %s RETURNING id",
+            (hash_token(token, state.settings.token_pepper),),
+        ).fetchone()
+    if row is None:
+        raise bad_request("The confirmation link is not valid.", "invalid-token")
+    return {"status": "Subscription confirmed."}

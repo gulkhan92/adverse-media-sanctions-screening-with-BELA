@@ -1,0 +1,65 @@
+---
+title: "How multilingual entity linking works: from mention detection to knowledge base entities"
+description: A step-by-step explanation of how software finds a name in text, in any of many languages, and connects it to the right entry in a knowledge base.
+date: 2026-10-26
+tags: [Entity linking, Multilingual]
+---
+
+When a person reads the sentence "The ministry suspended Ivanov's licence," they know who Ivanov is only if the surrounding text or their own knowledge tells them. Entity linking is the task of making software do the same: find the names in text and connect each one to a specific entry in a knowledge base. This article explains the steps, with attention to what changes when the text is not in English.
+
+## The two sub-tasks
+
+Entity linking combines two problems.
+
+**Mention detection** finds the spans of text that refer to entities, such as people, organizations, and places. In "Banco del Sur denied the claim," the span is "Banco del Sur."
+
+**Entity disambiguation** decides which entity in the knowledge base each mention refers to. Several banks may share that name, and the correct one depends on the text.
+
+Older systems ran these in sequence. A recognizer tagged the names, and a second component picked the entity for each. Errors in the first step were passed on to the second, and the second had no way to correct them.
+
+## The knowledge base
+
+A knowledge base is a collection of entities, each with an identifier, a name, aliases, and a short description. Wikidata is a common choice because it is open, covers many languages, and gives each entity a stable identifier. For screening, the knowledge base can be extended with watchlist entries so that sanctioned names are always candidates.
+
+The knowledge base also defines what cannot be linked. A person who has no entry cannot be linked to one, which is why a system needs a way to say that a mention has no match.
+
+## Candidate retrieval with dense vectors
+
+A knowledge base can hold millions of entities, so the system cannot compare a mention with all of them in detail. It first retrieves a short list of candidates.
+
+Modern systems do this with embeddings. A neural network turns the mention and its surrounding context into a vector of numbers. Each entity, described by its name and short description, is turned into a vector by the same kind of network. Mentions and entities that are semantically close have vectors that are close in the space. Retrieval is then a nearest neighbor search, which an index built for approximate search can answer in milliseconds.
+
+Because the encoder is trained on many languages, a mention written in Arabic, Spanish, or Korean can land near the same entity description, even though the words differ. This is what makes the approach multilingual. The system does not translate the text. It maps all languages into a shared space.
+
+## End-to-end models
+
+Instead of separate detection and disambiguation steps, an end-to-end model such as BELA reads a passage once and produces both the spans and the candidate entities. The model scores every possible span, decides which spans are mentions, and retrieves entities for each from a precomputed index. Joint training lets the detection step learn from the linking signal and avoids passing hard decisions between components.
+
+The result is faster than a pipeline and works across the languages the encoder covers. BELA covers 97 languages. That figure describes the model's training coverage. Accuracy differs by language, depending on how much training data exists, and a responsible evaluation reports each language separately.
+
+## Rejecting mentions
+
+A linker must be able to say no. Many names in news refer to entities that are not in the knowledge base. A score threshold decides whether the best candidate is accepted. If the top score is too low, the mention is kept as unlinked, often called NIL.
+
+The threshold trades precision against recall. A high threshold links fewer mentions and makes fewer mistakes. A low one links more and makes more. The right value depends on the cost of each error, which is why calibrating it on labeled data matters more than the default.
+
+## Hard cases and a second opinion
+
+Some mentions are ambiguous after retrieval. Two candidates may have close scores, or the context may be short. For those, a second stage can help. A cross-encoder reads the mention with its context and each candidate description together, rather than as separate vectors, and produces a more precise score. It is slower, so it is applied only to the short list. A local language model can serve as a third stage for the rare cases that remain unclear, with its answer constrained to choosing among the candidates or rejecting them.
+
+This arrangement, with fast retrieval first and slower, more precise methods applied only where needed, is covered in more detail in the article on retrieval and re-ranking.
+
+## What changes outside English
+
+Several details make non-English text harder.
+
+- **Scripts and tokenization.** Languages without spaces between words, such as Chinese and Thai, need different tokenization, and right-to-left scripts need careful handling of text direction in interfaces.
+- **Transliteration.** A name may appear in the source script in one article and in a Latin spelling in another. Embeddings help, but exact string matching does not.
+- **Uneven knowledge bases.** Entities that matter locally may have sparse descriptions in the knowledge base, or none in the language of the article.
+- **Uneven evaluation data.** Public benchmarks cover some languages better than others, so measured accuracy in a low-resource language may rest on little data.
+
+## Putting the result to use
+
+For screening, the output of linking is a set of mentions with entity identifiers and confidence scores. These are stored when the article is ingested. When an analyst screens a subject later, the system reads stored links instead of running the models again, which keeps single checks fast. The analyst sees the passage with the mention highlighted, the entity it was linked to, and the score.
+
+Linking is a probabilistic step. It will make mistakes, and its confidence is a measure of belief and not a guarantee. A screening workflow should show that uncertainty and leave the decision to a person.

@@ -274,7 +274,15 @@ class DemoRequest(Strict):
     name: ShortText
     email: EmailStr
     company: ShortText | None = None
+    role: ShortText | None = None
+    industry: ShortText | None = None
+    consent: bool = Field(default=False, description="Agreement to be contacted about the request")
     message: Annotated[
         str, StringConstraints(strip_whitespace=True, min_length=10, max_length=2000)
     ]
+    website: str | None = Field(default=None, max_length=200, description="Leave empty")
+
+
+class NewsletterSubscribe(Strict):
+    email: EmailStr
     website: str | None = Field(default=None, max_length=200, description="Leave empty")

@@ -1,0 +1,74 @@
+{
+  "utility": {
+    "support": "Assistance",
+    "status": "État",
+    "developers": "Développeurs",
+    "language": "Langue"
+  },
+  "nav": {
+    "platform": "Plateforme",
+    "solutions": "Solutions",
+    "industries": "Secteurs",
+    "resources": "Ressources",
+    "pricing": "Tarifs",
+    "company": "Entreprise",
+    "login": "Se connecter",
+    "demo": "Demander une démonstration",
+    "menu": "Menu",
+    "close": "Fermer",
+    "primary": "Principale",
+    "skip": "Aller au contenu principal",
+    "home": "Accueil"
+  },
+  "footer": {
+    "newsletter": "Lettre d'information",
+    "newsletterText": "Notes sur le produit et la méthodologie, quelques fois par an.",
+    "email": "Adresse e-mail",
+    "subscribe": "S'abonner",
+    "disclaimer": "Les correspondances sont des pistes pour examen humain et non des décisions juridiques.",
+    "sources": "Crédits des sources de données",
+    "rights": "Tous droits réservés.",
+    "privacy": "Confidentialité",
+    "terms": "Conditions",
+    "cookies": "Cookies",
+    "demoLabel": "Environnement de démonstration. Les chiffres clients et de revenus sont synthétiques.",
+    "sourcesText": "Données de sanctions issues des listes OFAC du Trésor américain. Données d'entités de Wikidata (CC0), GLEIF (conditions d'utilisation ouvertes) et de l'ICIJ Offshore Leaks Database (ODbL, contenus CC BY-SA). Métadonnées d'actualité de GDELT."
+  },
+  "cookie": {
+    "title": "Cookies",
+    "text": "Ce site n'utilise que les cookies nécessaires à son fonctionnement et mémorise votre langue. Aucun cookie publicitaire ou d'analyse.",
+    "accept": "Compris",
+    "more": "Politique relative aux cookies"
+  },
+  "login": {
+    "title": "Se connecter",
+    "email": "E-mail professionnel",
+    "password": "Mot de passe",
+    "submit": "Se connecter",
+    "forgot": "Mot de passe oublié ?",
+    "code": "Code d'authentification",
+    "verify": "Vérifier",
+    "mfaTitle": "Vérification en deux étapes",
+    "mfaText": "Saisissez le code à 6 chiffres de votre application d'authentification.",
+    "demoNotice": "Environnement de démonstration. Clients, abonnements et revenus sont synthétiques.",
+    "recovery": "Utiliser un code de récupération",
+    "setupTitle": "Configurer la vérification en deux étapes",
+    "setupText": "Scannez le code avec une application d'authentification, puis saisissez le code à 6 chiffres.",
+    "saveCodes": "Conservez ces codes de récupération. Chacun ne sert qu'une fois.",
+    "continue": "Continuer vers la plateforme"
+  },
+  "forgot": {
+    "title": "Réinitialiser le mot de passe",
+    "submit": "Envoyer le lien",
+    "back": "Retour à la connexion",
+    "text": "Saisissez votre e-mail professionnel. Si un compte existe, nous enverrons un lien.",
+    "sent": "Si le compte existe, un message de réinitialisation a été envoyé."
+  },
+  "reset": {
+    "title": "Choisissez un nouveau mot de passe",
+    "password": "Nouveau mot de passe",
+    "submit": "Mettre à jour",
+    "done": "Mot de passe mis à jour. Vous pouvez vous connecter.",
+    "missing": "Ce lien est incomplet. Demandez-en un nouveau."
+  }
+}

@@ -1,0 +1,204 @@
+@import "tailwindcss";
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/jetbrains-mono";
+
+/* Metric-adjusted fallback so the page does not shift when Inter finishes loading. */
+@font-face {
+  font-family: "Inter Fallback";
+  src: local("Arial");
+  size-adjust: 107.4%;
+  ascent-override: 90.4%;
+  descent-override: 22.5%;
+  line-gap-override: 0%;
+}
+
+@theme {
+  --font-sans: "Inter Variable", "Inter Fallback", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+
+  --color-ink: #0b1b33;
+  --color-navy: #12305a;
+  --color-brand-600: #1f5fbf;
+  --color-brand-500: #2f74d8;
+  --color-brand-100: #e6effb;
+  --color-teal: #00a3a3;
+  --color-success: #1e8e5a;
+  --color-warning: #c77700;
+  --color-danger: #c0392b;
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-300: #cbd5e1;
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #64748b;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+  --color-slate-800: #1e293b;
+  --color-slate-900: #0f172a;
+  --color-page: #f6f8fb;
+  --color-line: #dde3ec;
+  --color-dark-bg: #0e1626;
+  --color-dark-surface: #152038;
+  --color-dark-line: #243252;
+
+  --color-chart-1: #2f74d8;
+  --color-chart-2: #00a3a3;
+  --color-chart-3: #e69f00;
+  --color-chart-4: #8e5bd9;
+  --color-chart-5: #d55e5e;
+  --color-chart-6: #6c7a89;
+
+  --text-display: 3.5rem;
+  --text-display--line-height: 3.75rem;
+  --text-h1: 2.75rem;
+  --text-h1--line-height: 3.125rem;
+  --text-h2: 2rem;
+  --text-h2--line-height: 2.5rem;
+  --text-h3: 1.5rem;
+  --text-h3--line-height: 2rem;
+  --text-h4: 1.25rem;
+  --text-h4--line-height: 1.75rem;
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1.125rem;
+
+  --radius-card: 12px;
+  --radius-control: 8px;
+  --shadow-e1: 0 1px 2px rgb(11 27 51 / 0.06);
+  --shadow-e2: 0 4px 16px rgb(11 27 51 / 0.08);
+  --shadow-e3: 0 16px 48px rgb(11 27 51 / 0.14);
+
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--color-page);
+    color: var(--color-slate-800);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.625rem;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--color-ink);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-brand-500);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .container-page {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 1280px;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 1024px) {
+    .container-page {
+      padding-inline: 2rem;
+    }
+  }
+  .section {
+    padding-block: 3.5rem;
+  }
+  @media (min-width: 1024px) {
+    .section {
+      padding-block: 6rem;
+    }
+  }
+  .prose-doc {
+    max-width: 44rem;
+    font-size: 1.0625rem;
+    line-height: 1.8;
+  }
+  .prose-doc h2 {
+    font-size: 1.75rem;
+    line-height: 2.25rem;
+    margin: 2.5rem 0 1rem;
+  }
+  .prose-doc h3 {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    margin: 2rem 0 0.75rem;
+  }
+  .prose-doc p,
+  .prose-doc ul,
+  .prose-doc ol {
+    margin-bottom: 1.1rem;
+  }
+  .prose-doc ul {
+    list-style: disc;
+    padding-inline-start: 1.5rem;
+  }
+  .prose-doc ol {
+    list-style: decimal;
+    padding-inline-start: 1.5rem;
+  }
+  .prose-doc a {
+    color: var(--color-brand-600);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .prose-doc table {
+    width: 100%;
+    margin-bottom: 1.25rem;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+  }
+  .prose-doc th,
+  .prose-doc td {
+    border: 1px solid var(--color-line);
+    padding: 0.5rem 0.75rem;
+    text-align: start;
+  }
+  .prose-doc th {
+    background: var(--color-slate-100);
+  }
+  .prose-doc blockquote {
+    border-inline-start: 3px solid var(--color-brand-500);
+    padding-inline-start: 1rem;
+    color: var(--color-slate-600);
+    margin-bottom: 1.1rem;
+  }
+  .prose-doc code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: var(--color-slate-100);
+    padding: 0.1em 0.35em;
+    border-radius: 4px;
+  }
+}
+
+.mesh {
+  background-image:
+    radial-gradient(60% 80% at 15% 20%, rgb(47 116 216 / 0.35), transparent 70%),
+    radial-gradient(50% 70% at 85% 30%, rgb(0 163 163 / 0.28), transparent 70%),
+    radial-gradient(60% 80% at 60% 100%, rgb(142 91 217 / 0.22), transparent 70%);
+}

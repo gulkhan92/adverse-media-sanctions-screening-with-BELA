@@ -153,7 +153,14 @@ def test_api_key_rate_limit(make_client: Any, seed: dict[str, Any]) -> None:
 
 def test_contact_form(make_client: Any, seed: dict[str, Any]) -> None:
     client = make_client()
-    body = {"name": "Sam Doe", "email": "sam@example.org", "message": "We would like a demo."}
+    body = {
+        "name": "Sam Doe",
+        "email": "sam@example.org",
+        "message": "We would like a demo.",
+        "consent": True,
+    }
+    no_consent = client.post("/api/v1/contact/demo-request", json={**body, "consent": False})
+    assert no_consent.status_code == 400
     assert client.post("/api/v1/contact/demo-request", json=body).status_code == 202
     spam = client.post("/api/v1/contact/demo-request", json={**body, "website": "http://spam"})
     assert spam.status_code == 202
@@ -165,6 +172,32 @@ def test_contact_form(make_client: Any, seed: dict[str, Any]) -> None:
     )
     codes = [client.post("/api/v1/contact/demo-request", json=body).status_code for _ in range(8)]
     assert 429 in codes
+
+
+def test_newsletter_double_opt_in(make_client: Any, seed: dict[str, Any]) -> None:
+    client = make_client()
+    state = seed["state"]
+    first = client.post("/api/v1/contact/newsletter", json={"email": "Reader@Example.org"})
+    assert first.status_code == 202
+    mail = state.mailer.outbox[-1]
+    assert mail.to == "reader@example.org" and "/newsletter/confirm?token=" in mail.body
+    row = seed["admin"].execute("SELECT confirmed_at FROM newsletter_subscribers").fetchone()
+    assert row[0] is None  # not subscribed until confirmed
+    token = mail.body.split("token=")[1].split()[0]
+    assert (
+        client.post("/api/v1/contact/newsletter/confirm", params={"token": "x" * 20}).status_code
+        == 400
+    )
+    assert (
+        client.post("/api/v1/contact/newsletter/confirm", params={"token": token}).status_code
+        == 200
+    )
+    row = seed["admin"].execute("SELECT confirmed_at FROM newsletter_subscribers").fetchone()
+    assert row[0] is not None
+    sent = len(state.mailer.outbox)
+    again = client.post("/api/v1/contact/newsletter", json={"email": "reader@example.org"})
+    assert again.status_code == 202 and len(state.mailer.outbox) == sent  # no mail, same reply
+    assert client.post("/api/v1/contact/newsletter", json={"email": "bad"}).status_code == 422
 
 
 def test_health_and_openapi(make_client: Any) -> None:

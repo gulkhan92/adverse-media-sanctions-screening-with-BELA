@@ -1,0 +1,74 @@
+{
+  "utility": {
+    "support": "Support",
+    "status": "Status",
+    "developers": "Entwickler",
+    "language": "Sprache"
+  },
+  "nav": {
+    "platform": "Plattform",
+    "solutions": "Lösungen",
+    "industries": "Branchen",
+    "resources": "Ressourcen",
+    "pricing": "Preise",
+    "company": "Unternehmen",
+    "login": "Anmelden",
+    "demo": "Demo anfragen",
+    "menu": "Menü",
+    "close": "Schließen",
+    "primary": "Hauptnavigation",
+    "skip": "Zum Hauptinhalt springen",
+    "home": "Startseite"
+  },
+  "footer": {
+    "newsletter": "Newsletter",
+    "newsletterText": "Hinweise zu Produkt und Methodik, wenige Male im Jahr.",
+    "email": "E-Mail-Adresse",
+    "subscribe": "Abonnieren",
+    "disclaimer": "Treffer sind Hinweise für die menschliche Prüfung und keine rechtlichen Feststellungen.",
+    "sources": "Quellennachweise",
+    "rights": "Alle Rechte vorbehalten.",
+    "privacy": "Datenschutz",
+    "terms": "Nutzungsbedingungen",
+    "cookies": "Cookies",
+    "demoLabel": "Demo-Umgebung. Alle Kunden- und Umsatzzahlen sind synthetisch.",
+    "sourcesText": "Sanktionsdaten aus den OFAC-Listen des US-Finanzministeriums. Entitätsdaten von Wikidata (CC0), GLEIF (offene Nutzungsbedingungen) und der ICIJ Offshore Leaks Database (ODbL, Inhalte CC BY-SA). Nachrichten-Metadaten von GDELT."
+  },
+  "cookie": {
+    "title": "Cookies",
+    "text": "Diese Website verwendet nur notwendige Cookies und speichert Ihre Sprachauswahl. Keine Werbe- oder Analyse-Cookies.",
+    "accept": "Verstanden",
+    "more": "Cookie-Richtlinie"
+  },
+  "login": {
+    "title": "Anmelden",
+    "email": "Geschäftliche E-Mail",
+    "password": "Passwort",
+    "submit": "Anmelden",
+    "forgot": "Passwort vergessen?",
+    "code": "Authentifizierungscode",
+    "verify": "Bestätigen",
+    "mfaTitle": "Zwei-Schritt-Verifizierung",
+    "mfaText": "Geben Sie den 6-stelligen Code Ihrer Authentifizierungs-App ein.",
+    "demoNotice": "Demo-Umgebung. Mandanten, Abonnements und Umsätze sind synthetisch.",
+    "recovery": "Wiederherstellungscode verwenden",
+    "setupTitle": "Zwei-Schritt-Verifizierung einrichten",
+    "setupText": "Scannen Sie den Code mit einer Authentifizierungs-App und geben Sie den 6-stelligen Code ein.",
+    "saveCodes": "Speichern Sie diese Wiederherstellungscodes. Jeder gilt einmal.",
+    "continue": "Weiter zur Plattform"
+  },
+  "forgot": {
+    "title": "Passwort zurücksetzen",
+    "submit": "Link senden",
+    "back": "Zurück zur Anmeldung",
+    "text": "Geben Sie Ihre geschäftliche E-Mail ein. Existiert ein Konto, senden wir einen Link.",
+    "sent": "Falls das Konto existiert, wurde eine Nachricht zum Zurücksetzen gesendet."
+  },
+  "reset": {
+    "title": "Neues Passwort wählen",
+    "password": "Neues Passwort",
+    "submit": "Passwort aktualisieren",
+    "done": "Passwort aktualisiert. Sie können sich jetzt anmelden.",
+    "missing": "Dieser Link ist unvollständig. Fordern Sie einen neuen an."
+  }
+}
