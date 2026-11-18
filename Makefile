@@ -104,7 +104,7 @@ valkey-up:
 api-up:
 	.venv/bin/uvicorn --factory atlas.api.app:factory --app-dir apps/api --host 127.0.0.1 --port 8000
 api-test:
-	.venv/bin/pytest -q tests/api/test_api_*.py tests/api/test_phase5_*.py \
+	.venv/bin/pytest -q tests/api/test_api_*.py tests/api/test_phase5_*.py tests/api/test_phase6_*.py \
 		--cov=atlas.api --cov=atlas.jobs --cov-report=term-missing
 api-security:
 	.venv/bin/bandit -q -r apps/api/atlas/api -ll
@@ -124,3 +124,13 @@ beat:
 	ATLAS_CELERY_BROKER_URL=$(BROKER) .venv/bin/celery -A atlas.jobs.celery_app beat -l info
 monitor-now:
 	ATLAS_CELERY_BROKER_URL=$(BROKER) .venv/bin/celery -A atlas.jobs.celery_app call atlas.monitor_scan
+
+# Phase 6: synthetic business data and analytics views ---------------------------------
+.PHONY: business-data business-load business-refresh business
+business-data:
+	$(PY) $(SCRIPTS)/generate_demo_business_data.py
+business-load:
+	$(PY) -m atlas.etl.business
+business-refresh:
+	infra/dev_db.sh psql -c "SELECT refresh_business_views()"
+business: business-data business-load

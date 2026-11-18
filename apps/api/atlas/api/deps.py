@@ -214,8 +214,12 @@ def audit_denied(state: AppState, request: Request, principal: Principal, permis
         )
 
 
-def context(permission: str | None = None) -> Callable[..., Iterator[Ctx]]:
-    """Dependency factory: authenticate, check ``permission``, and open a scoped transaction."""
+def context(permission: str | None = None, platform: bool = False) -> Callable[..., Iterator[Ctx]]:
+    """Dependency factory: authenticate, check ``permission``, and open a scoped transaction.
+
+    With ``platform=True`` the request always runs in platform scope (all tenants) and only
+    platform roles may call it; an ``X-Tenant-Id`` header is ignored.
+    """
 
     def dependency(request: Request) -> Iterator[Ctx]:
         state = app_state(request)
@@ -223,7 +227,13 @@ def context(permission: str | None = None) -> Callable[..., Iterator[Ctx]]:
         if permission and permission not in principal.permissions:
             audit_denied(state, request, principal, permission)
             raise forbidden()
-        scope = scope_for(principal, request)
+        if platform:
+            if principal.role not in PLATFORM_SCOPE_ROLES:
+                audit_denied(state, request, principal, "platform-scope")
+                raise forbidden()
+            scope = PLATFORM
+        else:
+            scope = scope_for(principal, request)
         with state.db.session(scope) as conn:
             ctx = Ctx(request, state, principal, scope, conn)
             yield ctx
@@ -238,6 +248,10 @@ def context(permission: str | None = None) -> Callable[..., Iterator[Ctx]]:
 
 def Authorized(permission: str | None = None) -> Any:  # noqa: N802
     return Depends(context(permission))
+
+
+def AuthorizedPlatform(permission: str | None = None) -> Any:  # noqa: N802
+    return Depends(context(permission, platform=True))
 
 
 def public_session(request: Request) -> Iterator[tuple[AppState, psycopg.Connection[Row]]]:

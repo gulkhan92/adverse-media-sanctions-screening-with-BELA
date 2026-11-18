@@ -11,6 +11,7 @@ from dataclasses import replace
 from typing import Any
 
 from celery import Celery
+from celery.schedules import crontab
 
 from atlas.api.settings import Settings, from_env
 
@@ -24,6 +25,7 @@ app.conf.update(
         "atlas.monitor_scan": {"queue": "match"},
         "atlas.ingest_article": {"queue": "ingest"},
         "atlas.refresh_alert_stats": {"queue": "reports"},
+        "atlas.refresh_business_views": {"queue": "reports"},
     },
     task_acks_late=True,
     worker_prefetch_multiplier=1,
@@ -32,6 +34,10 @@ app.conf.update(
     beat_schedule={
         "monitor-subjects": {"task": "atlas.monitor_scan", "schedule": 300.0},
         "alert-statistics": {"task": "atlas.refresh_alert_stats", "schedule": 900.0},
+        "business-views-nightly": {
+            "task": "atlas.refresh_business_views",
+            "schedule": crontab(hour=2, minute=0),
+        },
     },
 )
 

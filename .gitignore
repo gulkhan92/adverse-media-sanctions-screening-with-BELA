@@ -19,3 +19,5 @@ models/*
 !models/.gitkeep
 !models/manifest.yaml
 .coverage
+data/synthetic/*
+!data/synthetic/.gitkeep

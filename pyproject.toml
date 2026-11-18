@@ -43,6 +43,8 @@ api = [
   "redis>=5.0",
   "weasyprint>=62",
   "networkx>=3.2",
+  "statsmodels>=0.14",
+  "numpy>=1.26",
 ]
 nlp = ["scikit-learn>=1.4", "matplotlib>=3.8", "pysbd>=0.3"]
 models = ["torch>=2.2", "transformers>=4.40", "sentencepiece>=0.2", "prometheus-client>=0.20"]
@@ -62,6 +64,7 @@ extend-immutable-calls = [
   "fastapi.Header",
   "fastapi.File",
   "atlas.api.deps.Authorized",
+  "atlas.api.deps.AuthorizedPlatform",
 ]
 
 [tool.ruff.lint.per-file-ignores]

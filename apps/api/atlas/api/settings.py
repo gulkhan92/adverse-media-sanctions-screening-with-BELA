@@ -51,6 +51,8 @@ class Settings:
     mail_from: str = "no-reply@atlas.invalid"
     web_origin: str = "http://localhost:3000"
     vector_search: bool = False
+    queue_sla_hours: int = 72
+    cache_ttl_seconds: float = 60.0
     celery_broker_url: str | None = None
     worker_database_url: str = "postgresql://atlas_worker@127.0.0.1:54329/atlas"
     nel_url: str = "http://127.0.0.1:8082"

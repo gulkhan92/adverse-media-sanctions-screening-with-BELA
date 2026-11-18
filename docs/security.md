@@ -18,6 +18,7 @@ role. Line coverage of `atlas.api` and `atlas.jobs` is 90 percent (the CI thresh
 | Transport and headers | CSP, `nosniff`, frame denial, referrer and permissions policy, HSTS, `no-store`, no CORS headers, request ID echo and sanitising |
 | Real time | SSE over a real HTTP server delivers an alert update only to the owning tenant; unauthenticated stream refused; Valkey rate limit and pub/sub backends |
 | Workflows | score formula and breakdown sums; configuration bounds rejected at the API; CSV validation, partial failure isolation, encrypted input wiped after processing, formula neutralisation in exports, batch privacy across tenants and roles; monitoring de-duplication, tenant scoping, and event delivery only to the owning tenant; HTML escaping and link filtering in the PDF report; end-to-end flow (subject, monitoring, fixture article, alert over SSE, review, report) |
+| Analytics | revenue routes only for finance and platform roles (manager, tenant admin, viewer refused), tenant header ignored on revenue routes, operational data scoped to the caller's tenant, cache never shared between tenants, CSV exports audited and refreshes audited |
 | Data protection | date of birth not present in the stored bytes, absent from list responses |
 
 ## Static analysis

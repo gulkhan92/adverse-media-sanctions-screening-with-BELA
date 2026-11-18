@@ -12,13 +12,23 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
+from atlas.api.cache import ResponseCache
 from atlas.api.db import Database
 from atlas.api.errors import ApiError, problem_body
 from atlas.api.events import MemoryBus, ValkeyBus
 from atlas.api.mailer import Mailer
 from atlas.api.middleware import SecurityMiddleware
 from atlas.api.ratelimit import MemoryBackend, RateLimiter, ValkeyBackend
-from atlas.api.routers import admin, alerts, analytics, auth, knowledge, screenings, system
+from atlas.api.routers import (
+    admin,
+    alerts,
+    analytics,
+    auth,
+    dashboards,
+    knowledge,
+    screenings,
+    system,
+)
 from atlas.api.security import dummy_hash, make_hasher
 from atlas.api.settings import Settings, finalize, from_env
 from atlas.api.state import AppState
@@ -41,7 +51,7 @@ def build_state(settings: Settings) -> AppState:
         backend = ValkeyBackend(client)
         bus = ValkeyBus(settings.valkey_url)
     hasher = make_hasher(settings)
-    extras: dict[str, Any] = {}
+    extras: dict[str, Any] = {"cache": ResponseCache(settings.cache_ttl_seconds)}
     if settings.vector_search:
         from atlas.api.embedding_client import make_nel_embedder
 
@@ -140,7 +150,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         knowledge.watchlists,
         knowledge.ingestion,
         analytics.analytics,
-        analytics.platform,
+        dashboards.revenue,
+        dashboards.analytics,
         admin.billing,
         admin.admin,
         admin.contact,

@@ -33,7 +33,8 @@ network fetchers; it is added to the User-Agent header.
 | `gold/` | Hand-labeled evaluation set (committed) |
 | `annotation/` | Label Studio configuration and annotation guidelines |
 | `reports/` | Row count report |
-| `synthetic/`, `seed/` | Reserved for phases 2 and 6 (business data and demo seed) |
+| `synthetic/` | Generated demo business data (`make business-data`); rebuilt, not committed |
+| `seed/` | Reserved for the demo seed (phase 10) |
 
 Not downloaded in phase 1: OpenSanctions (optional demo source) and the Multilingual
 CC-News slices (`raw/news/cc_news/`), which are only needed for load tests in later

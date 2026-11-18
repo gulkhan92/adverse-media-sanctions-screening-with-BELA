@@ -46,8 +46,8 @@ with `python -m atlas.api.cli create-user EMAIL platform_admin`.
 | Cases | `GET/POST /cases`, `GET/PATCH /cases/{id}` | `cases` |
 | Knowledge | `GET /entities/search`, `/entities/{id}`, `/graph/neighbors`, `/graph/path`, `/watchlists/sources`, `/watchlists/entries`, `/articles`, `/articles/{id}` | `view` |
 | Analytics | `GET /analytics/overview` | `view` |
-| Analytics | `GET /analytics/operations`, `/analytics/usage` | `ops_analytics` |
-| Platform | `GET /platform/revenue/summary`, `/mrr`, `/cohorts`, `/tenants` (synthetic, labeled demo data) | `revenue` |
+| Analytics | `GET /analytics/operations`, `/usage`, `/kpis`, `/volume`, `/severity`, `/quality`, `/latency`, `/languages`, `/categories`, `/risk-by-country`, `/queue-ageing`, `/throughput`, `/routing`, `/hybrid-vs-baseline` | `ops_analytics` |
+| Platform | `GET /platform/revenue/summary`, `/kpis`, `/mrr`, `/movements`, `/mix`, `/forecast`, `/cohorts`, `/dimensions`, `/concentration`, `/unit-economics`, `/billing-health`, `/customers`, `/customers/{id}`, `POST /platform/revenue/refresh` (synthetic, labeled demo data) | `revenue` |
 | Platform | `GET /tenants`, `POST /tenants`, `GET /ingestion/status`, `GET /admin/audit/verify` | `platform` |
 | Admin | `GET/POST /admin/users`, `PATCH /admin/users/{id}`, `GET/POST /admin/api-keys`, `DELETE /admin/api-keys/{id}`, `GET/PUT /admin/risk-config`, `GET /billing/plan`, `GET /billing/invoices` | `admin` |
 | Admin | `GET /admin/audit` | `audit` |
@@ -121,3 +121,25 @@ Without a broker the API processes uploads itself after responding. The worker c
   development database finished in 1.0 second.
 - Both are single-machine laptop measurements. The load test with concurrent users is part of
   phase 9.
+
+## Dashboard endpoints (phase 6)
+
+Revenue endpoints (`/platform/revenue/*`) and the operational endpoints under `/analytics`
+share these query parameters:
+
+| Parameter | Values |
+|---|---|
+| `range` | `30d`, `90d`, `12m` (default), `all`, `custom` with `from` and `to` |
+| `granularity` | `day`, `week`, `month`. Revenue accepts `month` only |
+| `compare` | `true` adds the previous period of the same length |
+| `plan`, `region`, `industry`, `channel` | Revenue filters (see `docs/metrics.md`) |
+| `format` | `csv` exports the table behind the chart |
+
+Revenue routes always run across all tenants and ignore `X-Tenant-Id`. Responses carry
+`as_of`, `refreshed_at`, and `X-Cache`. Definitions, formulas, and assumptions are in
+`docs/metrics.md`. The business data is generated with `make business` (seed 42, 36 months,
+ending ARR about 6.0 million USD) and the views are refreshed nightly by the worker.
+
+Measured on the seeded database (cold cache, three parameter sets per endpoint, one machine):
+every revenue endpoint answers in under 25 ms, and every operational endpoint in under 500 ms
+(asserted by the tests).

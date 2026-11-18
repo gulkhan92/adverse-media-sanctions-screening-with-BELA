@@ -8,6 +8,7 @@ from typing import Any
 from atlas.api.app import build_state
 from atlas.api.batch import process_batch
 from atlas.api.monitoring import refresh_alert_stats, scan_monitored
+from atlas.api.revenue import refresh_business_views
 from atlas.api.state import AppState
 from atlas.jobs.celery_app import app, worker_settings
 
@@ -34,3 +35,8 @@ def monitor_scan_task(tenant_id: str | None = None) -> dict[str, Any]:
 @app.task(name="atlas.refresh_alert_stats")  # type: ignore[untyped-decorator]
 def refresh_alert_stats_task() -> int:
     return refresh_alert_stats(state())
+
+
+@app.task(name="atlas.refresh_business_views")  # type: ignore[untyped-decorator]
+def refresh_business_views_task() -> str:
+    return refresh_business_views(state()).isoformat()

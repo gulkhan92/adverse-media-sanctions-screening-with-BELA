@@ -8,11 +8,9 @@ from fastapi import APIRouter, Query
 
 from atlas.api.deps import Authorized, Ctx
 from atlas.api.errors import PROBLEM_RESPONSES
-from atlas.api.rbac import OPS, REVENUE, VIEW
+from atlas.api.rbac import OPS, VIEW
 
 analytics = APIRouter(prefix="/analytics", tags=["analytics"], responses=PROBLEM_RESPONSES)
-platform = APIRouter(prefix="/platform", tags=["platform"], responses=PROBLEM_RESPONSES)
-DEMO = {"demo_data": True, "label": "Demo data: synthetic tenants, subscriptions, and invoices"}
 
 
 @analytics.get("/overview", summary="Alert and screening counts")
@@ -92,55 +90,3 @@ def usage(
         (days,),
     ).fetchall()
     return {"window_days": days, "items": rows}
-
-
-# --- Platform revenue (synthetic) --------------------------------------------------------------
-
-
-@platform.get("/revenue/summary", summary="Current MRR, ARR, and customer counts")
-def revenue_summary(ctx: Ctx = Authorized(REVENUE)) -> dict[str, Any]:
-    latest = ctx.conn.execute(
-        "SELECT month_end, active_customers, mrr FROM mrr_monthly ORDER BY month_end DESC LIMIT 1"
-    ).fetchone()
-    previous = ctx.conn.execute(
-        "SELECT mrr FROM mrr_monthly ORDER BY month_end DESC OFFSET 1 LIMIT 1"
-    ).fetchone()
-    mrr = float(latest["mrr"]) if latest else 0.0
-    prev = float(previous["mrr"]) if previous else 0.0
-    return {
-        **DEMO,
-        "as_of": latest["month_end"] if latest else None,
-        "mrr": mrr,
-        "arr": round(mrr * 12, 2),
-        "active_customers": latest["active_customers"] if latest else 0,
-        "mrr_growth_pct": round(100 * (mrr - prev) / prev, 2) if prev else None,
-    }
-
-
-@platform.get("/revenue/mrr", summary="Monthly recurring revenue series")
-def revenue_mrr(ctx: Ctx = Authorized(REVENUE)) -> dict[str, Any]:
-    rows = ctx.conn.execute(
-        "SELECT month_end, active_customers, mrr FROM mrr_monthly ORDER BY month_end"
-    ).fetchall()
-    return {**DEMO, "items": rows}
-
-
-@platform.get("/revenue/cohorts", summary="Revenue retention by signup cohort")
-def revenue_cohorts(ctx: Ctx = Authorized(REVENUE)) -> dict[str, Any]:
-    rows = ctx.conn.execute(
-        "SELECT cohort, months_since, mrr, retention FROM cohort_retention "
-        "ORDER BY cohort, months_since"
-    ).fetchall()
-    return {**DEMO, "items": rows}
-
-
-@platform.get("/revenue/tenants", summary="Revenue by tenant")
-def revenue_tenants(ctx: Ctx = Authorized(REVENUE)) -> dict[str, Any]:
-    rows = ctx.conn.execute(
-        "SELECT t.id, t.name, t.industry, t.region, t.acquisition_channel, t.churned_at, "
-        "coalesce(sum(CASE WHEN s.billing_cycle = 'annual' THEN s.price / 12 ELSE s.price END), 0) "
-        "AS mrr FROM tenants t LEFT JOIN subscriptions s ON s.tenant_id = t.id "
-        "AND s.start_date <= current_date AND (s.end_date IS NULL OR s.end_date > current_date) "
-        "GROUP BY t.id ORDER BY mrr DESC, t.name LIMIT 200"
-    ).fetchall()
-    return {**DEMO, "items": rows}
